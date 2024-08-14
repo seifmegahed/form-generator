@@ -1,0 +1,17 @@
+{
+  "name": "form-builder",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Seif Megahed",
+    "url": "https://github.com/seifmegahed"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
