@@ -5,9 +5,9 @@ import { Command } from "commander";
 import prompts from "prompts";
 import path from "path";
 import fs from "fs/promises";
-import { configPrompts } from "./utils/config.js";
+import { configPrompts } from "./config/config.js";
 import urls from "./utils/urls.js";
-import SelectorTransformer from "./utils/selector-transformer.js";
+import SelectorTransformer from "./transformers/selector-transformer.js";
 
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));

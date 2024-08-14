@@ -1,4 +1,4 @@
-import { componentsPathString, utilsPathString } from "./matchers.js";
+import { componentsPathString, utilsPathString } from "../utils/matchers.js";
 
 class FileTransformer {
   file: string;

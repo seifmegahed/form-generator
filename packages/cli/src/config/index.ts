@@ -1,6 +1,6 @@
 import { PromptObject } from "prompts";
-import { highlight } from "./common.js";
-import { FieldOptions } from "./selector-transformer.js";
+import { highlight } from "../utils/common.js";
+import { FieldOptions } from "../transformers/selector-transformer.js";
 
 const DEFAULT_COMPONENTS = "@/components";
 const DEFAULT_UTILS = "@/utils";

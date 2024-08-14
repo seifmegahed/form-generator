@@ -1,5 +1,5 @@
 import FileTransformer from "./file-transformer.js";
-import { commentPrefix, commentsRegex, splitString } from "./matchers.js";
+import { commentPrefix, commentsRegex, splitString } from "../utils/matchers.js";
 
 export enum FieldOptions {
   Text = "text",
