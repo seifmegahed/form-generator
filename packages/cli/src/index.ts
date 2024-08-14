@@ -5,8 +5,8 @@ import { Command } from "commander";
 import prompts from "prompts";
 import path from "path";
 import fs from "fs/promises";
-import { configPrompts } from "./config/config.js";
-import urls from "./utils/urls.js";
+import { configPrompts } from "./config/index.js";
+import urls from "./consts/urls.js";
 import SelectorTransformer from "./transformers/selector-transformer.js";
 
 process.on("SIGINT", () => process.exit(0));
