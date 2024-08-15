@@ -13,7 +13,8 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "lint": "tsc",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "link": "npm unlink form-builder && npm link ."
   },
   "files": [
     "dist"
