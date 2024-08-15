@@ -23,6 +23,7 @@
     "commander": "^12.1.0",
     "fs-extra": "^11.2.0",
     "prompts": "^2.4.2",
+    "tsconfig-paths": "^4.2.0",
     "type-fest": "^4.24.0"
   },
   "devDependencies": {

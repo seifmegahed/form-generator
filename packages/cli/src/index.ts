@@ -8,6 +8,12 @@ import fs from "fs/promises";
 import { configPrompts } from "./config/index.js";
 import urls from "./consts/urls.js";
 import SelectorTransformer from "./transformers/selector-transformer.js";
+import {
+  ConfigLoaderFailResult,
+  type ConfigLoaderSuccessResult,
+  createMatchPath,
+  loadConfig,
+} from "tsconfig-paths";
 
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));
@@ -30,9 +36,28 @@ program
       process.exit(1);
     }
 
+    // if (!existsSync(path.join(cwd, "src"))) {
+    //   console.error(`The directory ${cwd}/src does not exist`);
+    //   process.exit(1);
+    // }
+
     const selectorComponent = new SelectorTransformer(
       await fetch(urls.selector).then((res) => res.text())
     );
+
+    const tsconfig = loadConfig(cwd);
+
+    if(tsconfig.resultType === "failed") {
+      console.error(`Could not load tsconfig.json`);
+      process.exit(1);
+    }
+
+    const componentsPath = await resolveImport(
+      configs.components,
+      tsconfig as ConfigLoaderSuccessResult
+    );
+
+    console.log(componentsPath);
 
     await fs.writeFile(
       path.join(cwd, "selector.tsx"),
@@ -41,10 +66,21 @@ program
         .removeComments()
         .rscPrepend(configs.rsc)
         .replaceUtilsAlias(configs.utils)
-        .replaceComponentsAlias(configs.components)
-        .file,
+        .replaceComponentsAlias(configs.components).file,
       { flag: "w+" }
     );
   });
+
+async function resolveImport(
+  importPath: string,
+  config: ConfigLoaderSuccessResult
+) {
+  return createMatchPath(config.absoluteBaseUrl, config.paths)(
+    importPath,
+    undefined,
+    () => true,
+    [".ts", ".tsx"]
+  );
+}
 
 program.parse();
