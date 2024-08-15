@@ -1,5 +1,9 @@
 "use client"
+/**
+ * 
+ */
 
+//split//select
 import {
   Select,
   SelectContent,
@@ -7,13 +11,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+//split//text
 import { Input } from "@/components/ui/input";
 import type { InputProps } from "@/components/ui/input";
+//split//textarea
 import { Textarea } from "@/components/ui/textarea";
 import type { TextareaProps } from "@/components/ui/textarea";
-import { FormItem } from "@/components/ui/form";
+//split//checkbox
 import { Checkbox } from "@/components/ui/checkbox";
+import { FormItem } from "@/components/ui/form";
 
+//split//body
 import type { z } from "zod";
 import type { ControllerRenderProps, Path } from "react-hook-form";
 import { cn } from "@/lib/utils";
@@ -36,6 +44,7 @@ function FieldSelector<T extends FieldDataType>({
   fieldData,
 }: FieldSelectorProps<T>) {
   switch (fieldData.type) {
+//split//select
     case FieldType.Select:
       return (
         <FieldWrapper
@@ -62,6 +71,7 @@ function FieldSelector<T extends FieldDataType>({
           </Select>
         </FieldWrapper>
       );
+//split//text
     case FieldType.Text:
       return (
         <FieldWrapper
@@ -80,6 +90,7 @@ function FieldSelector<T extends FieldDataType>({
           <Input {...(field as InputProps)} type="number" />
         </FieldWrapper>
       );
+//split//textarea
     case FieldType.Textarea:
       return (
         <FieldWrapper
@@ -94,6 +105,7 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FieldWrapper>
       );
+//split//checkbox
     case FieldType.Checkbox:
       return (
         <FormItem
@@ -111,6 +123,7 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FormItem>
       );
+//split//body
     default:
       return null;
   }
