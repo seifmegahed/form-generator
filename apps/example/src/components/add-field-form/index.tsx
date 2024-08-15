@@ -5,27 +5,21 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 
-/**
- *
- * To Fix:
- *  Figure out why schema is always required!
- */
-
 const schemas = (required: boolean, type: FieldType) => {
   console.log(required, type);
   switch (type) {
     case FieldType.Text:
-      return required ? z.preprocess(emptyToUndefined, z.string()) : z.string();
+      return required ? z.preprocess(emptyToUndefined, z.string()) : z.string().optional();
     case FieldType.Number:
-      return required ? z.preprocess(emptyToUndefined, z.number()) : z.number();
+      return required ? z.preprocess(emptyToUndefined, z.number()) : z.number().optional();
     case FieldType.Select:
-      return z.string();
+      return required ? z.string() : z.string().optional();
     case FieldType.Textarea:
-      return required ? z.preprocess(emptyToUndefined, z.string()) : z.string();
+      return required ? z.preprocess(emptyToUndefined, z.string()) : z.string().optional();
     case FieldType.Checkbox:
       return z.boolean();
     default:
-      return z.string();
+      return z.string().optional();
   }
 };
 
