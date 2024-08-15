@@ -36,18 +36,13 @@ program
       process.exit(1);
     }
 
-    // if (!existsSync(path.join(cwd, "src"))) {
-    //   console.error(`The directory ${cwd}/src does not exist`);
-    //   process.exit(1);
-    // }
-
     const selectorComponent = new SelectorTransformer(
       await fetch(urls.selector).then((res) => res.text())
     );
 
     const tsconfig = loadConfig(cwd);
 
-    if(tsconfig.resultType === "failed") {
+    if (tsconfig.resultType === "failed") {
       console.error(`Could not load tsconfig.json`);
       process.exit(1);
     }
@@ -57,10 +52,19 @@ program
       tsconfig as ConfigLoaderSuccessResult
     );
 
-    console.log(componentsPath);
+    if (!componentsPath) {
+      console.error(`Could not resolve import path ${configs.components}`);
+      process.exit(1);
+    }
+
+    const formBuilderDirPath = path.join(componentsPath, "form-builder");
+
+    if (!existsSync(formBuilderDirPath)) {
+      await fs.mkdir(formBuilderDirPath);
+    }
 
     await fs.writeFile(
-      path.join(cwd, "selector.tsx"),
+      path.join(formBuilderDirPath, "selector.tsx"),
       selectorComponent
         .filterFields(configs.fields)
         .removeComments()
