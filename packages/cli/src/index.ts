@@ -6,14 +6,14 @@ import prompts from "prompts";
 import path from "path";
 import fs from "fs/promises";
 import { configPrompts } from "./config/index.js";
-import urls from "./consts/urls.js";
+import files from "./consts/urls.js";
 import SelectorTransformer from "./transformers/selector-transformer.js";
 import {
-  ConfigLoaderFailResult,
   type ConfigLoaderSuccessResult,
   createMatchPath,
   loadConfig,
 } from "tsconfig-paths";
+import FileTransformer from "./transformers/file-transformer.js";
 
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));
@@ -35,10 +35,6 @@ program
       console.error(`The directory ${cwd} does not exist`);
       process.exit(1);
     }
-
-    const selectorComponent = new SelectorTransformer(
-      await fetch(urls.selector).then((res) => res.text())
-    );
 
     const tsconfig = loadConfig(cwd);
 
@@ -63,16 +59,33 @@ program
       await fs.mkdir(formBuilderDirPath);
     }
 
-    await fs.writeFile(
-      path.join(formBuilderDirPath, "selector.tsx"),
-      selectorComponent
-        .filterFields(configs.fields)
-        .removeComments()
-        .rscPrepend(configs.rsc)
-        .replaceUtilsAlias(configs.utils)
-        .replaceComponentsAlias(configs.components).file,
-      { flag: "w+" }
-    );
+    Object.keys(files).forEach(async (fileKey) => {
+      const fileUrl = files[fileKey as keyof typeof files].url;
+      const fileName = files[fileKey as keyof typeof files].file;
+      const fileContent = await fetch(fileUrl).then((res) => res.text());
+      if (fileKey === "selector") {
+        const selectorComponent = new SelectorTransformer(fileContent);
+        await fs.writeFile(
+          path.join(formBuilderDirPath, files[fileKey].file),
+          selectorComponent
+            .filterFields(configs.fields)
+            .removeComments()
+            .rscPrepend(configs.rsc)
+            .replaceUtilsAlias(configs.utils)
+            .replaceComponentsAlias(configs.components).file,
+          { flag: "w+" }
+        );
+      } else {
+        const component = new FileTransformer(fileContent);
+        await fs.writeFile(
+          path.join(formBuilderDirPath, fileName),
+          component
+            .replaceUtilsAlias(configs.utils)
+            .replaceComponentsAlias(configs.components).file,
+          { flag: "w+" }
+        );
+      }
+    });
   });
 
 async function resolveImport(
