@@ -126,6 +126,7 @@ function FieldSelector<T extends FieldDataType>({
           <Checkbox
             checked={field.value as boolean}
             onCheckedChange={field.onChange}
+            className="size-5 border-2"
           />
         </FormItem>
       );

@@ -9,10 +9,13 @@ import type { FieldDataType, FormGeneratorProps } from "./types";
 import { reduceDefaultValues, reduceSchema } from "./utils";
 import FieldSelector from "./field-selector";
 
-class FormGenerator<T extends FieldDataType[]> {
-  formData: T;
+class FormGenerator<T extends readonly FieldDataType[]> {
+  readonly formData: T;
   readonly schema: z.ZodObject<{
-    [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
+    [K in T[number]["name"]]: Extract<
+      T[number],
+      { name: K }
+    >["schema"];
   }>;
   readonly defaultValues: {
     [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
@@ -22,7 +25,10 @@ class FormGenerator<T extends FieldDataType[]> {
     this.formData = formData;
     this.schema = z.object(
       formData.reduce(reduceSchema<T[number]>, {}) as {
-        [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
+        [K in T[number]["name"]]: Extract<
+          T[number],
+          { name: K }
+        >["schema"];
       },
     );
     this.defaultValues = formData.reduce(

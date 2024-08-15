@@ -3,9 +3,14 @@
 import { z } from "zod";
 import { useState } from "react";
 import FormTester from "@/components/form-builder-tester";
-import { emptyToUndefined } from "@/components/form-builder";
+import {
+  emptyToUndefined,
+  type FieldDataType,
+} from "@/components/form-builder";
 import { FieldType } from "@/components/form-builder";
 import { Button } from "@/components/ui/button";
+import Dialog from "@/components/dialog";
+import AddFieldForm from "@/components/add-field-form";
 
 const formFields = [
   {
@@ -42,8 +47,8 @@ const formFields = [
       emptyToUndefined,
       z.preprocess(
         (val) => Number(val),
-        z.number({ invalid_type_error: "Age must be a number" })
-      )
+        z.number({ invalid_type_error: "Age must be a number" }),
+      ),
     ),
   },
   {
@@ -65,38 +70,25 @@ const formFields = [
 ];
 
 export default function HomePage() {
-  const [fields, setFields] = useState(formFields);
-
-  const newField = (label: string) => ({
-    name: label.toLowerCase().replace(" ", "-"),
-    label,
-    type: FieldType.Text,
-    default: "",
-    className: "md:col-span-2",
-    schema: z.preprocess(emptyToUndefined, z.string()),
-  });
-  
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
+  const [fields, setFields] = useState<FieldDataType[]>(formFields);
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <div className="flex justify-center items-center min-h-screen flex-col gap-5 md:px-5 py-5">
-        <FormTester formFields={fields} />
-        <Button
-          className="w-60"
-          onClick={() => {
-            setFields((prev) => [...prev, newField(`Field ${fields.length}`)]);
-            scrollToTop();
+    <div className="flex min-h-screen flex-col items-center justify-center gap-5 py-5 md:px-5">
+      <FormTester formFields={fields} />
+      <Dialog
+        open={open}
+        setOpen={setOpen}
+        button={<Button className="w-60">Add Field</Button>}
+      >
+        <AddFieldForm
+          onSubmit={(field) => {
+            setFields((prev) => [...prev, field]);
+            setOpen(false);
+            console.log(field);
           }}
-        >
-          Add Field
-        </Button>
-      </div>
-    </>
+        />
+      </Dialog>
+    </div>
   );
 }

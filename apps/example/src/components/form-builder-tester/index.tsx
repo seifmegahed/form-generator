@@ -12,7 +12,7 @@ import { useMemo } from "react";
 function FormTester({ formFields }: { formFields: FieldDataType[] }) {
   const formData = useMemo(
     () => new FormGenerator<typeof formFields>(formFields),
-    [formFields]
+    [formFields],
   );
 
   type schemaDataType = z.infer<typeof formData.schema>;
@@ -29,15 +29,15 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
 
   return (
     <form
-      className="w-full max-w-lg bg-primary-foreground p-5 sm:rounded-lg shadow-md"
+      className="w-full max-w-lg bg-primary-foreground p-5 shadow-md sm:rounded-lg"
       onSubmit={form.handleSubmit(onSubmit)}
     >
-      <div className="text-3xl font-bold py-3">
-        <p className="text-primary  line-clamp-1 text-ellipsis">
+      <div className="py-3 text-3xl font-bold">
+        <p className="line-clamp-1 text-ellipsis text-primary">
           Form Builder Tester
         </p>
       </div>
-      <div className="grid md:grid-cols-4 gap-x-3">
+      <div className="grid gap-x-3 md:grid-cols-4">
         {formData.fields<typeof formFields, schemaDataType>({
           form,
         })}
