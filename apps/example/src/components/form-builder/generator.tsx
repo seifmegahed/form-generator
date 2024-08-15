@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { z } from "zod";
 import type { ControllerRenderProps } from "react-hook-form";
@@ -23,11 +23,11 @@ class FormGenerator<T extends FieldDataType[]> {
     this.schema = z.object(
       formData.reduce(reduceSchema<T[number]>, {}) as {
         [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
-      }
+      },
     );
     this.defaultValues = formData.reduce(
       reduceDefaultValues<T[number]>,
-      {}
+      {},
     ) as {
       [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
     };
@@ -37,10 +37,10 @@ class FormGenerator<T extends FieldDataType[]> {
     T extends readonly FieldDataType[],
     FormSchema extends {
       [K in T[number]["name"]]: z.infer<T[number]["schema"]>;
-    }
+    },
   >({ form }: FormGeneratorProps<T, FormSchema>) {
     return (
-      <Form {...form} >
+      <Form {...form}>
         {this.formData.map((fieldData) =>
           fieldData.hidden ? null : (
             <FormField
@@ -55,7 +55,7 @@ class FormGenerator<T extends FieldDataType[]> {
                 />
               )}
             />
-          )
+          ),
         )}
       </Form>
     );

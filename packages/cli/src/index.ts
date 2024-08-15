@@ -70,7 +70,7 @@ program
           selectorComponent
             .filterFields(configs.fields)
             .removeComments()
-            .rscPrepend(configs.rsc)
+            .rscPrepare(configs.rsc)
             .replaceUtilsAlias(configs.utils)
             .replaceComponentsAlias(configs.components).file,
           { flag: "w+" }
@@ -80,6 +80,7 @@ program
         await fs.writeFile(
           path.join(formBuilderDirPath, fileName),
           component
+            .rscPrepare(configs.rsc)
             .replaceUtilsAlias(configs.utils)
             .replaceComponentsAlias(configs.components).file,
           { flag: "w+" }

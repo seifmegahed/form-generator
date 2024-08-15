@@ -1,6 +1,6 @@
-"use client"
+"use client";
 /**
- * 
+ *
  */
 
 //split//select
@@ -29,7 +29,6 @@ import { cn } from "@/lib/utils";
 import FieldWrapper from "./field-wrapper";
 import { FieldType, type FieldDataType } from "./types";
 
-
 type FormSchema<T extends FieldDataType> = {
   [K in T["name"]]: z.infer<Extract<T, { name: K }>["schema"]>;
 };
@@ -44,14 +43,14 @@ function FieldSelector<T extends FieldDataType>({
   fieldData,
 }: FieldSelectorProps<T>) {
   switch (fieldData.type) {
-//split//select
+    //split//select
     case FieldType.Select:
       return (
-        <FieldWrapper
-          className={fieldData.className}
-          label={fieldData.label}
-        >
-          <Select onValueChange={field.onChange} value={field.value as string ?? ""}>
+        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+          <Select
+            onValueChange={field.onChange}
+            value={(field.value as string) ?? ""}
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -71,32 +70,26 @@ function FieldSelector<T extends FieldDataType>({
           </Select>
         </FieldWrapper>
       );
-//split//text
+    //split//text
     case FieldType.Text:
       return (
-        <FieldWrapper
-          className={fieldData.className}
-          label={fieldData.label}
-        >
-          <Input {...(field as InputProps)} value={field.value as string ?? ""} />
+        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+          <Input
+            {...(field as InputProps)}
+            value={(field.value as string) ?? ""}
+          />
         </FieldWrapper>
       );
     case FieldType.Number:
       return (
-        <FieldWrapper
-          className={fieldData.className}
-          label={fieldData.label}
-        >
+        <FieldWrapper className={fieldData.className} label={fieldData.label}>
           <Input {...(field as InputProps)} type="number" />
         </FieldWrapper>
       );
-//split//textarea
+    //split//textarea
     case FieldType.Textarea:
       return (
-        <FieldWrapper
-          className={fieldData.className}
-          label={fieldData.label}
-        >
+        <FieldWrapper className={fieldData.className} label={fieldData.label}>
           <Textarea
             {...(field as TextareaProps)}
             rows={6}
@@ -105,13 +98,13 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FieldWrapper>
       );
-//split//checkbox
+    //split//checkbox
     case FieldType.Checkbox:
       return (
         <FormItem
           className={cn(
             "flex items-center justify-between py-4",
-            fieldData.className
+            fieldData.className,
           )}
         >
           <span className="text-lg text-muted-foreground">
@@ -123,7 +116,7 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FormItem>
       );
-//split//body
+    //split//body
     default:
       return null;
   }
