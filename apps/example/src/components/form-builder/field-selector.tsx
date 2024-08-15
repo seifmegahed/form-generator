@@ -1,6 +1,19 @@
 "use client";
 /**
- *
+ *  Split anchors are used to split the code by the CLI.
+ *  When adding a new Component to the switch, add an anchor
+ *  followed by the name of the component like this:
+ * 
+ *   //split//select
+ * 
+ *  Then make sure you update the CLI to handle the new component
+ *  accordingly in:
+ * 
+ *   ./packages/cli/src/transformers/selector-transformer.ts
+ *   ./packages/cli/src/transformers/config/index.ts
+ * 
+ *  Note: All comments in this file are cleared when pulled by 
+ *  the CLI.
  */
 
 //split//select
