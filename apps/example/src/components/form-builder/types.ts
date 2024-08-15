@@ -4,12 +4,11 @@ import type { z } from "zod";
 export type defaultValueTypes = (string | number | boolean | Date) | undefined;
 
 export enum FieldType {
-  Number = "number",
-  Date = "date",
-  Select = "select",
-  Checkbox = "checkbox",
-  Textarea = "textarea",
   Text = "text",
+  Number = "number",
+  Select = "select",
+  Textarea = "textarea",
+  Checkbox = "checkbox",
 }
 
 export type FieldDataType = {
