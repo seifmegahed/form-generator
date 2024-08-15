@@ -1,4 +1,4 @@
-import { componentsPathString, utilsPathString } from "../utils/matchers.js";
+import { componentsPathRegex, utilsPathRegex } from "../utils/matchers.js";
 
 class FileTransformer {
   file: string;
@@ -8,16 +8,16 @@ class FileTransformer {
   }
 
   replaceUtilsAlias(alias: string) {
-    this.file = this.file.replace(utilsPathString, alias);
+    this.file = this.file.replace(utilsPathRegex, alias);
     return this;
   }
   replaceComponentsAlias(alias: string) {
-    this.file = this.file.replace(componentsPathString, alias);
+    this.file = this.file.replace(componentsPathRegex, alias);
     return this;
   }
   rscPrepend(state: boolean) {
     if (!state) return this;
-    this.file = "use client\n\n" + this.file;
+    this.file = '"use client"\n\n' + this.file;
     return this;
   }
 }

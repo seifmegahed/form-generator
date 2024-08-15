@@ -6,5 +6,5 @@ export const splitString = "//split";
 
 export const commentPrefix = "//";
 
-export const componentsPathString = "@/components";
-export const utilsPathString = "@/lib/utils";
+export const componentsPathRegex = new RegExp(/\@\/components/g);
+export const utilsPathRegex = new RegExp(/\@\/lib\/utils/g);
