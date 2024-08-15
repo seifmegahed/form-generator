@@ -23,8 +23,6 @@ const program = new Command();
 program
   .name("react-form-builder")
   .description("CLI to create a react form builder component")
-  .option("-y --yes", "Skip all prompts", false)
-  .option("-o --overwrite", "overwrite existing files", true)
   .option("-c --cwd <cwd>", "path to the component", process.cwd())
   .action(async (opts) => {
     const configs = await prompts(configPrompts);

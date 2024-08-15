@@ -3,7 +3,7 @@ import { highlight } from "../utils/common.js";
 import { FieldOptions } from "../transformers/selector-transformer.js";
 
 const DEFAULT_COMPONENTS = "@/components";
-const DEFAULT_UTILS = "@/utils";
+const DEFAULT_UTILS = "@/lib/utils";
 
 export const configPrompts: PromptObject[] = [
   {
