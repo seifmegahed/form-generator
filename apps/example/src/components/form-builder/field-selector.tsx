@@ -3,16 +3,16 @@
  *  Split anchors are used to split the code by the CLI.
  *  When adding a new Component to the switch, add an anchor
  *  followed by the name of the component like this:
- * 
+ *
  *   //split//select
- * 
+ *
  *  Then make sure you update the CLI to handle the new component
  *  accordingly in:
- * 
+ *
  *   ./packages/cli/src/transformers/selector-transformer.ts
  *   ./packages/cli/src/transformers/config/index.ts
- * 
- *  Note: All comments in this file are cleared when pulled by 
+ *
+ *  Note: All comments in this file are cleared when pulled by
  *  the CLI.
  */
 
@@ -56,7 +56,7 @@ function FieldSelector<T extends FieldDataType>({
   fieldData,
 }: FieldSelectorProps<T>) {
   switch (fieldData.type) {
-    //split//select
+//split//select
     case FieldType.Select:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
@@ -83,7 +83,7 @@ function FieldSelector<T extends FieldDataType>({
           </Select>
         </FieldWrapper>
       );
-    //split//text
+//split//text
     case FieldType.Text:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
@@ -99,7 +99,7 @@ function FieldSelector<T extends FieldDataType>({
           <Input {...(field as InputProps)} type="number" />
         </FieldWrapper>
       );
-    //split//textarea
+//split//textarea
     case FieldType.Textarea:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
@@ -111,7 +111,7 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FieldWrapper>
       );
-    //split//checkbox
+//split//checkbox
     case FieldType.Checkbox:
       return (
         <FormItem
@@ -129,7 +129,7 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FormItem>
       );
-    //split//body
+//split//body
     default:
       return null;
   }
