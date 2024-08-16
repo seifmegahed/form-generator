@@ -24,6 +24,10 @@ const schemas = (required: boolean, type: FieldType) => {
         : z.string().optional();
     case FieldType.Checkbox:
       return z.boolean();
+    case FieldType.DatePicker:
+      return required
+        ? z.date()
+        : z.date().optional()
     default:
       return z.string().optional();
   }
@@ -41,6 +45,8 @@ const getDefaultValue = (type: FieldType, defaultValue: string | number) => {
       return defaultValue ? defaultValue : "";
     case FieldType.Checkbox:
       return false;
+    case FieldType.DatePicker:
+      return new Date();
     default:
       return "";
   }
@@ -108,8 +114,8 @@ const formFields = [
   {
     name: "options",
     label: "Options",
-    type: FieldType.Text,
-    className: "md:col-span-2",
+    type: FieldType.Textarea,
+    className: "md:col-span-4",
     default: "Options delimited by comma",
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
