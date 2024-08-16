@@ -21,7 +21,7 @@ process.on("SIGTERM", () => process.exit(0));
 const program = new Command();
 
 program
-  .name("react-form-builder")
+  .name("react-form-generator")
   .description("CLI to create a react form builder component")
   .option("-c --cwd <cwd>", "path to the component", process.cwd())
   .action(async (opts) => {

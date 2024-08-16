@@ -1,25 +1,38 @@
-# React Form Builder
->A React dynamic form builder component
+# React Form Generator
+>A Type-Safe, Dynamic Form Generator
 
 An easy way to build type-safe forms with dynamic fields and validations. This component is built on top of `react-hook-form` and `Zod`, and uses `shadcn-ui` components for styling. It is still in development and not published yet.
 
-You can try out the example at [form-builder](https://seifmegahed-form-builder.vercel.app/)
+### Features
+- Type-safety
+- Dynamic fields
+- Flexible validations
+- Easy integration with `react-hook-form`
+- Minimal setup
+
+### Supported Fields
+- Text
+- Number
+- Select
+- Checkbox
+
+You can try out the example at [form-generator](https://seifmegahed-form-generator.vercel.app/)
 
 ## Why?
 Writing forms is tedious and repetitive. While react-hook-form is a great library, it usually results in a lot of repetitive code, and making a reusable type-safe component out of it is a bit complicated.
-This project aims to solve this problem by providing a reusable form builder component
+This project aims to solve this problem by providing a reusable form generator component
 The component can also be used to dynamically build forms with type-safety, type inference/ts-autocomplete, and flexible validations.
 
 ### Inception
 > A form to generate forms.
 
-You can create user-generated forms as shown in the [example](https://seifmegahed-form-builder.vercel.app/) where a form is used to generate fields for another form. 
+You can create user-generated forms as shown in the [example](https://seifmegahed-form-generator.vercel.app/) where a form is used to generate fields for another form. 
 
 ### The DB Approach
 You can also store form structures in a database and use them to generate forms.
 
 ## How?
-The way you use the component is by passing an array of objects that describe the fields of the form to a class. The class will then give you a schema object and a default values object which you can use to initialize the form like you would normally do with `react-hook-form`.
+The way you use the component is by passing an array of objects that describe the fields of the form to a class. You can use the schema and default values provided by the class to initialize your form using `react-hook-form`.
 
 The field object is of type `FieldDataType` and looks like this:
 ```ts
@@ -39,14 +52,19 @@ type FieldDataType = {
 
 Creating the form should look like this:
 ```tsx
+// Define your form fields
+const formData: FieldDataType[] = [ /*...*/ ];
+
 function FormExample() {
 ...
-const formClass = new FormBuilder<typeof formData>(formData)
+// Initialize the form generator
+const formClass = new FormGenerator<typeof formData>(formData)
 
 const schema = z.object(formClass.schema)
 
 type SchemaType = z.infer<typeof schema>
 
+// Create a react-hook-form form instance
 const form = useForm<SchemaType>({
   resolver: zodResolver(schema),
   defaultValues: formClass.defaultValues,
@@ -71,9 +89,9 @@ return (
 ## Structure
 This project repo contains two workspaces. 
 
-The `apps` folder contains the example app and the form builder component. 
+The `apps` folder contains the example app and the form generator component. 
 
-the `cli` folder contains a cli tool to generate the form builder component files in your project.
+the `cli` folder contains a cli tool to generate the form generator component files in your project.
 
 ```tree
 .
@@ -82,7 +100,7 @@ the `cli` folder contains a cli tool to generate the form builder component file
 │       └── src
 │           ├── app
 │           └── components
-│               └── form-builder
+│               └── form-generator
 └── cli
 ```
 
@@ -94,16 +112,16 @@ npx shadcn-ui init
 ```
 
 Add the following `shadcn-ui` components. 
-The `form` component installs all the necessary dependencies (`react-hook-form`, `zod`, and `@hookform/resolvers`) that are required for the form-builder component.
+The `form` component installs all the necessary dependencies (`react-hook-form`, `zod`, and `@hookform/resolvers`) required by the form-generator component.
 ```bash
 npx shadcn-ui add form select checkbox label input textarea
 ```
 
-Add the form-builder component (not published yet)
+Add the form-generator component (not published yet)
 ```bash
-npx react-form-builder
+npx react-form-generator
 ```
-You can also copy the code from the form-builder folder located at `./apps/example/src/components/form-builder` into your project.
+You can also copy the code from the form-generator folder located at `./apps/example/src/components/form-generator` into your project.
 
 ## Example Usage
 
@@ -117,7 +135,7 @@ import {
   emptyToUndefined 
 } from '@hookform/resolvers/zod'
 
-import { FormBuilder } from '@/components/form-builder'
+import { FormGenerator } from '@/components/form-generator'
 
 import { Button } from '@/components/ui/button'
 
@@ -155,7 +173,7 @@ const formData: FieldDataType[] = [
 ] as const;
 
 function FormExample() {
-  const formClass = new FormBuilder<typeof formData>(formData)
+  const formClass = new FormGenerator<typeof formData>(formData)
 
   const schema = z.object(formClass.schema)
 

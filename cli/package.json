@@ -1,5 +1,5 @@
 {
-  "name": "@form-builder/cli",
+  "name": "@react-form-generator/cli",
   "version": "0.0.1",
   "description": "CLI for form-builder",
   "license": "MIT",
