@@ -8,7 +8,15 @@ You can try out the example at [form-builder](https://seifmegahed-form-builder.v
 ## Why?
 Writing forms is tedious and repetitive. While react-hook-form is a great library, it usually results in a lot of repetitive code, and making a reusable type-safe component out of it is a bit complicated.
 This project aims to solve this problem by providing a reusable form builder component
-The component can also be used to dynamically build user generated forms with type-safety and validations as shown in the example where a form is used to generate fields in another form.
+The component can also be used to dynamically build forms with type-safety, type inference/ts-autocomplete, and flexible validations.
+
+### Inception
+> A form to generate forms.
+
+You can create user-generated forms as shown in the [example](https://seifmegahed-form-builder.vercel.app/) where a form is used to generate fields for another form. 
+
+### The DB Approach
+You can also store form structures in a database and use them to generate forms.
 
 ## How?
 The way you use the component is by passing an array of objects that describe the fields of the form to a class. The class will then give you a schema object and a default values object which you can use to initialize the form like you would normally do with `react-hook-form`.
@@ -27,6 +35,37 @@ type FieldDataType = {
   hidden?: boolean;
   className?: string;
 };
+```
+
+Creating the form should look like this:
+```tsx
+function FormExample() {
+...
+const formClass = new FormBuilder<typeof formData>(formData)
+
+const schema = z.object(formClass.schema)
+
+type SchemaType = z.infer<typeof schema>
+
+const form = useForm<SchemaType>({
+  resolver: zodResolver(formClass.schema),
+  defaultValues: formClass.defaultValues,
+  })
+...
+}
+```
+
+And inside the tsx you can pass the fields like this:
+```tsx
+return (
+  ...
+  <div>
+    {formClass.fields<typeof formData, SchemaType>({
+      form,
+    })}
+  </div>
+  ...
+)
 ```
 
 ## Structure
@@ -66,7 +105,7 @@ npx react-form-builder
 ```
 You can also copy the code from the form-builder folder located at `./apps/example/src/components/form-builder` into your project.
 
-## Usage
+## Example Usage
 
 ```tsx
 import { z } from 'zod'
@@ -115,14 +154,19 @@ const formData: FieldDataType[] = [
   },
 ] as const;
 
-function FormDemo() {
+function FormExample() {
   const formClass = new FormBuilder<typeof formData>(formData)
-  const form = useForm<z.infer<typeof formClass.schema>>({
+
+  const schema = z.object(formClass.schema)
+
+  type SchemaType = z.infer<typeof schema>
+
+  const form = useForm<SchemaType>({
     resolver: zodResolver(formClass.schema),
     defaultValues: formClass.defaultValues,
   })
 
-  const onSubmit = (data: z.infer<typeof formClass.schema>) => {
+  const onSubmit = (data: SchemaType) => {
     console.log(data)
     form.reset()
   }
@@ -130,7 +174,7 @@ function FormDemo() {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid gap-x-3 md:grid-cols-4">
-        {formClass.fields<typeof formData, z.infer<typeof formClass.schema>>({
+        {formClass.fields<typeof formData, SchemaType>({
           form,
         })}
       </div>
@@ -147,3 +191,9 @@ function FormDemo() {
   )
 }
 ```
+
+## Contributing
+Contributions are welcome. Please open an issue or submit a pull request.
+
+## License
+MIT
