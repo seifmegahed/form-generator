@@ -1,6 +1,6 @@
 "use client";
 
-import type { z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,10 +15,12 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
     [formFields],
   );
 
-  type schemaDataType = z.infer<typeof formData.schema>;
+  const schema = z.object(formData.schema);
+
+  type schemaDataType = z.infer<typeof schema>;
 
   const form = useForm<schemaDataType>({
-    resolver: zodResolver(formData.schema),
+    resolver: zodResolver(schema),
     defaultValues: formData.defaultValues,
   });
 

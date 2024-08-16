@@ -121,12 +121,22 @@ function AddFieldForm({
   onSubmit: (field: FieldDataType) => void;
 }) {
   const formData = new FormGenerator<typeof formFields>(formFields);
-  const form = useForm<z.infer<typeof formData.schema>>({
-    resolver: zodResolver(formData.schema),
+
+  const schema = z.object(formData.schema).refine((data) => {
+    if ((data.type as FieldType) === FieldType.Select && data.options) {
+      return data.options.length > 0;
+    }
+    return true;
+  });
+
+  type schemaDataType = z.infer<typeof schema>;
+
+  const form = useForm<schemaDataType>({
+    resolver: zodResolver(schema),
     defaultValues: formData.defaultValues,
   });
 
-  const handleSubmit = (data: z.infer<typeof formData.schema>) => {
+  const handleSubmit = (data: schemaDataType) => {
     const field: FieldDataType = {
       name: data.name,
       label: data.Label,
@@ -134,7 +144,7 @@ function AddFieldForm({
       type: data.type as FieldType,
       default: getDefaultValue(data.type as FieldType, data.default),
       options:
-        data.type as FieldType === FieldType.Select
+        (data.type as FieldType) === FieldType.Select
           ? data.options.split(",").map((option) => option.trim())
           : undefined,
       schema: schemas(data.required, data.type as FieldType),
@@ -148,7 +158,7 @@ function AddFieldForm({
       onSubmit={form.handleSubmit(handleSubmit)}
     >
       <div className="grid w-full gap-x-3 md:grid-cols-4">
-        {formData.fields<typeof formFields, z.infer<typeof formData.schema>>({
+        {formData.fields<typeof formFields, schemaDataType>({
           form,
         })}
       </div>

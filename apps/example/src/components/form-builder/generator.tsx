@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import type { z } from "zod";
 import type { ControllerRenderProps } from "react-hook-form";
 
 import { Form, FormField } from "@/components/ui/form";
@@ -11,26 +11,19 @@ import FieldSelector from "./field-selector";
 
 class FormGenerator<T extends readonly FieldDataType[]> {
   readonly formData: T;
-  readonly schema: z.ZodObject<{
-    [K in T[number]["name"]]: Extract<
-      T[number],
-      { name: K }
-    >["schema"];
-  }>;
+  readonly schema: {
+    [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
+  };
   readonly defaultValues: {
     [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
   };
 
   constructor(formData: T) {
     this.formData = formData;
-    this.schema = z.object(
-      formData.reduce(reduceSchema<T[number]>, {}) as {
-        [K in T[number]["name"]]: Extract<
-          T[number],
-          { name: K }
-        >["schema"];
-      },
-    );
+    this.schema = formData.reduce(reduceSchema<T[number]>, {}) as {
+      [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
+    };
+
     this.defaultValues = formData.reduce(
       reduceDefaultValues<T[number]>,
       {},
