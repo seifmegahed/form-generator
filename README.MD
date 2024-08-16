@@ -48,7 +48,7 @@ const schema = z.object(formClass.schema)
 type SchemaType = z.infer<typeof schema>
 
 const form = useForm<SchemaType>({
-  resolver: zodResolver(formClass.schema),
+  resolver: zodResolver(schema),
   defaultValues: formClass.defaultValues,
   })
 ...
