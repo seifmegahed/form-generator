@@ -32,7 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import type { TextareaProps } from "@/components/ui/textarea";
 //split//checkbox
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormItem } from "@/components/ui/form";
+import { FormItem, FormMessage } from "@/components/ui/form";
 //split//date-picker
 import DatePicker from "./date-picker";
 
@@ -130,14 +130,24 @@ function FieldSelector<T extends FieldDataType>({
             onCheckedChange={field.onChange}
             className="size-5 border-2"
           />
+          <FormMessage />
         </FormItem>
       );
     //split//date-picker
     case FieldType.DatePicker:
       return (
-        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+        <FormItem
+          className={cn(
+            "flex items-center justify-between py-4",
+            fieldData.className,
+          )}
+        >
+          <span className="text-lg text-muted-foreground">
+            {fieldData.label}
+          </span>
           <DatePicker date={field.value as Date} onChange={field.onChange} />
-        </FieldWrapper>
+          <FormMessage />
+        </FormItem>
       );
     //split//body
     default:

@@ -15,7 +15,7 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
     [formFields],
   );
 
-  const schema = z.object(formData.schema);
+  const schema = useMemo(() => z.object(formData.schema), [formData]);
 
   type schemaDataType = z.infer<typeof schema>;
 

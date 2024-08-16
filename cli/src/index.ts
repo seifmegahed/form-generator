@@ -51,7 +51,7 @@ program
       process.exit(1);
     }
 
-    const formBuilderDirPath = path.join(componentsPath, "form-builder");
+    const formBuilderDirPath = path.join(componentsPath, "form-generator");
 
     if (!existsSync(formBuilderDirPath)) {
       await fs.mkdir(formBuilderDirPath);
