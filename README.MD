@@ -15,6 +15,7 @@ An easy way to build type-safe forms with dynamic fields and validations. This c
 - Number
 - Select
 - Checkbox
+- Date Picker
 
 You can try out the example at [form-generator](https://seifmegahed-form-generator.vercel.app/)
 
@@ -114,8 +115,25 @@ npx shadcn-ui init
 Add the following `shadcn-ui` components. 
 The `form` component installs all the necessary dependencies (`react-hook-form`, `zod`, and `@hookform/resolvers`) required by the form-generator component.
 ```bash
-npx shadcn-ui add form select checkbox label input textarea
+npx shadcn-ui add form label 
 ```
+Add the following components depending on the fields you want to use.
+- Text
+  - input
+- Select
+  - select
+- Textarea
+  - textarea
+- Checkbox
+  - checkbox
+- Date Picker
+  - calendar
+  - popover
+
+```bash
+npx shadcn-ui add select checkbox input textarea calendar popover
+```
+
 
 Add the form-generator component (not published yet)
 ```bash
@@ -155,6 +173,14 @@ const formData: FieldDataType[] = [
     className: "md:col-span-2",
     default: "john@doe.com",
     schema: z.preprocess(emptyToUndefined, z.string().email()),
+  },
+  {
+    name: 'date-of-admission',
+    label: 'Date of Admission',
+    type: FieldType.DatePicker,
+    className: "md:col-span-2",
+    default: new Date(),
+    schema: z.date(),
   },
   {
     name: 'age',

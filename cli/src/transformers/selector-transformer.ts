@@ -6,6 +6,7 @@ export enum FieldOptions {
   Select = "select",
   Textarea = "textarea",
   Checkbox = "checkbox",
+  DatePicker = "date-picker",
 }
 
 class SelectorTransformer extends FileTransformer {

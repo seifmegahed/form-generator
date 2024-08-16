@@ -40,6 +40,7 @@ export const configPrompts: PromptObject[] = [
       { title: "Select", value: FieldOptions.Select },
       { title: "Textarea", value: FieldOptions.Textarea },
       { title: "Checkbox", value: FieldOptions.Checkbox },
+      { title: "Date Picker", value: FieldOptions.DatePicker },
     ],
   },
 ];

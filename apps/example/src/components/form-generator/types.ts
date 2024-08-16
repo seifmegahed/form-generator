@@ -9,6 +9,7 @@ export enum FieldType {
   Select = "select",
   Textarea = "textarea",
   Checkbox = "checkbox",
+  DatePicker = "date-picker",
 }
 
 export type FieldDataType = {

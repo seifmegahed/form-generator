@@ -73,7 +73,20 @@ program
             .replaceComponentsAlias(configs.components).file,
           { flag: "w+" }
         );
-      } else {
+      } 
+      else if (fileKey === "datePicker") {
+        if(!configs.fields.includes("date-picker")) return;
+        const datePickerComponent = new FileTransformer(fileContent);
+        await fs.writeFile(
+          path.join(formBuilderDirPath, files[fileKey].file),
+          datePickerComponent
+            .rscPrepare(configs.rsc)
+            .replaceUtilsAlias(configs.utils)
+            .replaceComponentsAlias(configs.components).file,
+          { flag: "w+" }
+        );
+      }
+      else {
         const component = new FileTransformer(fileContent);
         await fs.writeFile(
           path.join(formBuilderDirPath, fileName),

@@ -8,6 +8,7 @@ const fileNames = {
   index: "index.ts",
   types: "types.ts",
   utils: "utils.ts",
+  datePicker: "date-picker.tsx",
 };
 
 const files = {
@@ -23,6 +24,10 @@ const files = {
   index: { url: parentRepoUrl + fileNames.index, file: fileNames.index },
   types: { url: parentRepoUrl + fileNames.types, file: fileNames.types },
   utils: { url: parentRepoUrl + fileNames.utils, file: fileNames.utils },
+  datePicker: {
+    url: parentRepoUrl + fileNames.datePicker,
+    file: fileNames.datePicker,
+  },
 } as const;
 
 export default files;

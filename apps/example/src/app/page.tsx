@@ -54,10 +54,18 @@ const formFields = [
   {
     name: "isStudent",
     label: "Is Student",
-    className: "md:col-span-4",
+    className: "md:col-span-2",
     type: FieldType.Checkbox,
     default: false,
     schema: z.boolean(),
+  },
+  {
+    name: "date-of-admission",
+    label: "Date of Admission",
+    className: "md:col-span-2",
+    type: FieldType.DatePicker,
+    default: new Date(),
+    schema: z.date(),
   },
   {
     name: "notes",

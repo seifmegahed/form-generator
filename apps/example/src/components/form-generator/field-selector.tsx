@@ -33,6 +33,8 @@ import type { TextareaProps } from "@/components/ui/textarea";
 //split//checkbox
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormItem } from "@/components/ui/form";
+//split//date-picker
+import DatePicker from "./date-picker";
 
 //split//body
 import type { z } from "zod";
@@ -56,7 +58,7 @@ function FieldSelector<T extends FieldDataType>({
   fieldData,
 }: FieldSelectorProps<T>) {
   switch (fieldData.type) {
-//split//select
+    //split//select
     case FieldType.Select:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
@@ -83,7 +85,7 @@ function FieldSelector<T extends FieldDataType>({
           </Select>
         </FieldWrapper>
       );
-//split//text
+    //split//text
     case FieldType.Text:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
@@ -99,7 +101,7 @@ function FieldSelector<T extends FieldDataType>({
           <Input {...(field as InputProps)} type="number" />
         </FieldWrapper>
       );
-//split//textarea
+    //split//textarea
     case FieldType.Textarea:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
@@ -111,7 +113,7 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FieldWrapper>
       );
-//split//checkbox
+    //split//checkbox
     case FieldType.Checkbox:
       return (
         <FormItem
@@ -130,7 +132,14 @@ function FieldSelector<T extends FieldDataType>({
           />
         </FormItem>
       );
-//split//body
+    //split//date-picker
+    case FieldType.DatePicker:
+      return (
+        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+          <DatePicker date={field.value as Date} onChange={field.onChange} />
+        </FieldWrapper>
+      );
+    //split//body
     default:
       return null;
   }
