@@ -94,7 +94,7 @@ npx shadcn-ui init
 ```
 
 Add the following `shadcn-ui` components. 
-The `form` component installs all the necessary dependencies (`react-hook-form`, `zod`, and `@hookform/resolvers`) and adds the form-builder component.
+The `form` component installs all the necessary dependencies (`react-hook-form`, `zod`, and `@hookform/resolvers`) that are required for the form-builder component.
 ```bash
 npx shadcn-ui add form select checkbox label input textarea
 ```
