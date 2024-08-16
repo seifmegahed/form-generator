@@ -1,10 +1,10 @@
 "use client";
 
-import { z } from "zod";
+import type { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { FormGenerator, FieldDataType } from "@/components/form-builder";
+import { FormGenerator, type FieldDataType } from "@/components/form-builder";
 
 import { Button } from "../ui/button";
 import { useMemo } from "react";

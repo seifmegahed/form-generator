@@ -57,7 +57,7 @@ class FormGenerator<T extends readonly FieldDataType[]> {
                 <FieldSelector<typeof fieldData>
                   key={fieldData.name}
                   fieldData={fieldData}
-                  field={field as ControllerRenderProps}
+                  field={field as unknown as ControllerRenderProps}
                 />
               )}
             />

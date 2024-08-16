@@ -134,7 +134,7 @@ function AddFieldForm({
       type: data.type as FieldType,
       default: getDefaultValue(data.type as FieldType, data.default),
       options:
-        data.type === FieldType.Select
+        data.type as FieldType === FieldType.Select
           ? data.options.split(",").map((option) => option.trim())
           : undefined,
       schema: schemas(data.required, data.type as FieldType),
