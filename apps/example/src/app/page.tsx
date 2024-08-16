@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { useState } from "react";
-import FormTester from "@/components/form-builder-tester";
+import FormTester from "@/components/form-generator-tester";
 import {
   emptyToUndefined,
   type FieldDataType,

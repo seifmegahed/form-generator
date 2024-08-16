@@ -36,7 +36,7 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
     >
       <div className="py-3 text-3xl font-bold">
         <p className="line-clamp-1 text-ellipsis text-primary">
-          Form Builder Tester
+          Form Generator Tester
         </p>
       </div>
       <div className="grid gap-x-3 md:grid-cols-4">
