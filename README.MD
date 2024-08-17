@@ -237,7 +237,7 @@ function FormExample() {
 ```
 
 ## Contributing
-Contributions are welcome. Please open an issue or submit a pull request.
+Contributions are welcome. Please check out the [contribution guidelines](https://github.com/seifmegahed/form-generator/blob/main/CONTRIBUTING.md).
 
 ## License
-MIT
+MIT License checkout the [license](https://github.com/seifmegahed/form-generator/blob/main/LICENSE.md) file.
