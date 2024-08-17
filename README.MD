@@ -4,10 +4,10 @@
 An easy way to build type-safe forms with dynamic fields and validations. This component is built on top of `react-hook-form` and `Zod`, and uses `shadcn-ui` components for styling. It is still in development and not published yet.
 
 ### Features
+- Single source of truth
 - Type-safety
-- Dynamic fields
+- Dynamically generated fields
 - Flexible validations
-- Easy integration with `react-hook-form`
 - Minimal setup
 
 ### Supported Fields

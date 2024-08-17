@@ -1,6 +1,10 @@
 "use client";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
@@ -17,8 +21,8 @@ function DatePicker({
   onChange: (date?: Date) => void;
 }) {
   const disabledDates = (date: Date) => {
-    if (allowFuture) return date < new Date("1900-01-01");
-    return date > new Date() || date < new Date("1900-01-01");
+    if (allowFuture) return new Date("1900-01-01") > date;
+    return date > new Date() || new Date("1900-01-01") > date;
   };
 
   return (
@@ -37,6 +41,7 @@ function DatePicker({
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
+          data-testid="date-picker-calendar"
           mode="single"
           month={date ?? new Date()}
           onMonthChange={(_date) => onChange(_date)}
