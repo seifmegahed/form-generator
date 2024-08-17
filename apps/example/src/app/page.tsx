@@ -20,7 +20,7 @@ const formFields = [
     type: FieldType.Text,
     default: "",
     schema: z.preprocess(emptyToUndefined, z.string()),
-  },
+  } as const,
   {
     name: "lastName",
     label: "Last Name",
@@ -28,7 +28,7 @@ const formFields = [
     type: FieldType.Text,
     default: "",
     schema: z.preprocess(emptyToUndefined, z.string()),
-  },
+  } as const,
   {
     name: "major",
     label: "Major",
@@ -37,7 +37,7 @@ const formFields = [
     default: undefined,
     options: ["Computer Science", "Mathematics", "Physics"],
     schema: z.string(),
-  },
+  } as const,
   {
     name: "age",
     label: "Age",
@@ -50,7 +50,7 @@ const formFields = [
         z.number({ invalid_type_error: "Age must be a number" }),
       ),
     ),
-  },
+  } as const,
   {
     name: "isStudent",
     label: "Is Student",
@@ -58,7 +58,7 @@ const formFields = [
     type: FieldType.Checkbox,
     default: false,
     schema: z.boolean(),
-  },
+  } as const,
   {
     name: "date-of-admission",
     label: "Date of Admission",
@@ -66,7 +66,7 @@ const formFields = [
     type: FieldType.DatePicker,
     default: new Date(),
     schema: z.date(),
-  },
+  } as const,
   {
     name: "notes",
     label: "Notes",
@@ -74,7 +74,7 @@ const formFields = [
     type: FieldType.Textarea,
     default: "",
     schema: z.string(),
-  },
+  } as const,
 ];
 
 export default function HomePage() {

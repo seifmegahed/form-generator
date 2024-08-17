@@ -70,7 +70,7 @@ function FieldSelector<T extends FieldDataType>({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {fieldData.options!.map((option) => {
+              {fieldData.options.map((option) => {
                 const label =
                   typeof option === "string" ? option : option.label;
                 const value =
@@ -145,7 +145,11 @@ function FieldSelector<T extends FieldDataType>({
           <span className="text-lg text-muted-foreground">
             {fieldData.label}
           </span>
-          <DatePicker date={field.value as Date} onChange={field.onChange} />
+          <DatePicker
+            date={field.value as Date}
+            onChange={field.onChange}
+            allowFuture={fieldData.allowFuture}
+          />
           <FormMessage />
         </FormItem>
       );

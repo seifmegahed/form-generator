@@ -25,9 +25,7 @@ const schemas = (required: boolean, type: FieldType) => {
     case FieldType.Checkbox:
       return z.boolean();
     case FieldType.DatePicker:
-      return required
-        ? z.date()
-        : z.date().optional()
+      return required ? z.date() : z.date().optional();
     default:
       return z.string().optional();
   }
@@ -36,13 +34,13 @@ const schemas = (required: boolean, type: FieldType) => {
 const getDefaultValue = (type: FieldType, defaultValue: string | number) => {
   switch (type) {
     case FieldType.Text:
-      return defaultValue ? defaultValue : "";
+      return defaultValue ? (defaultValue as string) : "";
     case FieldType.Number:
       return typeof defaultValue === "number" ? defaultValue : 0;
     case FieldType.Select:
       return undefined;
     case FieldType.Textarea:
-      return defaultValue ? defaultValue : "";
+      return defaultValue ? (defaultValue as string) : "";
     case FieldType.Checkbox:
       return false;
     case FieldType.DatePicker:
@@ -143,18 +141,25 @@ function AddFieldForm({
   });
 
   const handleSubmit = (data: schemaDataType) => {
-    const field: FieldDataType = {
-      name: data.name,
-      label: data.Label,
-      className: `md:col-span-${data.span}`,
-      type: data.type as FieldType,
-      default: getDefaultValue(data.type as FieldType, data.default),
-      options:
-        (data.type as FieldType) === FieldType.Select
-          ? data.options.split(",").map((option) => option.trim())
-          : undefined,
-      schema: schemas(data.required, data.type as FieldType),
-    };
+    const field: FieldDataType =
+      (data.type as FieldType) === FieldType.Select
+        ? ({
+            name: data.name,
+            label: data.Label,
+            className: `md:col-span-${data.span}`,
+            type: FieldType.Select,
+            default: getDefaultValue(FieldType.Select, data.default),
+            schema: schemas(data.required, FieldType.Select),
+            options: data.options.split(",").map((option) => option.trim()),
+          } as FieldDataType)
+        : ({
+            name: data.name,
+            label: data.Label,
+            className: `md:col-span-${data.span}`,
+            type: data.type as FieldType,
+            default: getDefaultValue(data.type as FieldType, data.default),
+            schema: schemas(data.required, data.type as FieldType),
+          } as FieldDataType);
     onSubmit(field);
   };
 

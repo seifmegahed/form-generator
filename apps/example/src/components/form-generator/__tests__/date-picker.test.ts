@@ -6,7 +6,7 @@ afterEach(() => {
   cleanup();
 });
 
-describe("DatePicker", () => {
+describe("DatePicker component test", () => {
   it("button should render", () => {
     let _date: Date | undefined = new Date("August 17, 2024");
     const onChange = (date: Date | undefined) => {
