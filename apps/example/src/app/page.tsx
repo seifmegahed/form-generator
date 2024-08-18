@@ -6,8 +6,8 @@ import FormTester from "@/components/form-generator-tester";
 import {
   emptyToUndefined,
   type FieldDataType,
-} from "@/components/form-generator";
-import { FieldType } from "@/components/form-generator";
+} from "@/form-generator";
+import { FieldType } from "@/form-generator";
 import { Button } from "@/components/ui/button";
 import Dialog from "@/components/dialog";
 import AddFieldForm from "@/components/add-field-form";

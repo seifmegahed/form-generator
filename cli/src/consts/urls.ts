@@ -1,5 +1,5 @@
 const parentRepoUrl =
-  "https://raw.githubusercontent.com/seifmegahed/form-generator/main/apps/example/src/components/form-generator/";
+  "https://raw.githubusercontent.com/seifmegahed/form-generator/main/apps/example/src/form-generator/";
 
 const fileNames = {
   selector: "field-selector.tsx",

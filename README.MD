@@ -94,14 +94,12 @@ The `apps` folder contains the example app and the form generator component.
 
 the `cli` folder contains a cli tool to generate the form generator component files in your project.
 
-```tree
+```
 .
 ├── apps
 │   └── example
 │       └── src
-│           ├── app
-│           └── components
-│               └── form-generator
+│           └── form-generator
 └── cli
 ```
 

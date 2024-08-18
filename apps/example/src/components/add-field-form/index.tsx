@@ -1,6 +1,6 @@
 import { z } from "zod";
-import type { FieldDataType } from "../form-generator";
-import { emptyToUndefined, FieldType, FormGenerator } from "../form-generator";
+import type { FieldDataType } from "@/form-generator";
+import { emptyToUndefined, FieldType, FormGenerator } from "@/form-generator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
