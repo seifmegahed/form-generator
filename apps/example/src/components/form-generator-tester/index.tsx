@@ -40,9 +40,7 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
         </p>
       </div>
       <div className="grid gap-x-3 md:grid-cols-4">
-        {formData.fields<typeof formFields, schemaDataType>({
-          form,
-        })}
+        {formData.fields<typeof formFields, schemaDataType>({ form })}
       </div>
       <div className="flex justify-end py-5">
         <Button

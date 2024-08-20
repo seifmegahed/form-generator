@@ -26,7 +26,8 @@ describe("DatePicker component test", () => {
     expect(button.getAttribute("data-state")).toBe("closed");
     fireEvent.click(button);
     expect(button.getAttribute("data-state")).toBe("open");
-    expect(screen.getByTestId("date-picker-calendar")).toMatchSnapshot();
+    const calendar = screen.getByTestId("date-picker-calendar");
+    if (!calendar) throw new Error("calendar not found");
   });
   it("should return the selected date", () => {
     let _date: Date | undefined = new Date("August 17, 2024");

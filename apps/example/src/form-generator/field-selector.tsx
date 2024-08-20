@@ -90,7 +90,7 @@ function FieldSelector<T extends FieldDataType>({
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
           <Input
-            {...(field as InputProps)}
+            {...field}
             value={(field.value as string) ?? ""}
           />
         </FieldWrapper>
