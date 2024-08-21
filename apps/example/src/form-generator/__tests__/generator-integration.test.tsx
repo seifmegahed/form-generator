@@ -7,12 +7,17 @@ import {
   screen,
 } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import ResizeObserver from "resize-observer-polyfill";
+
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import FormGeneratorClass from "../generator";
 import { type FieldDataType, FieldType } from "../types";
-import { number, z } from "zod";
 import { emptyToUndefined } from "../utils";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
+global.ResizeObserver = ResizeObserver;
 
 const formTestFields: Record<string, readonly FieldDataType[]> = {
   text: [
@@ -34,7 +39,7 @@ const formTestFields: Record<string, readonly FieldDataType[]> = {
       default: 0,
       schema: z.preprocess(
         emptyToUndefined,
-        z.preprocess((val) => Number(val), number()),
+        z.preprocess((val) => Number(val), z.number()),
       ),
     },
   ] as const,
@@ -53,6 +58,15 @@ const formTestFields: Record<string, readonly FieldDataType[]> = {
       ],
     },
   ] as const,
+  checkbox: [
+    {
+      name: "testField",
+      label: "Test Field",
+      type: FieldType.Checkbox,
+      default: false,
+      schema: z.boolean(),
+    },
+  ] as const,
 };
 
 afterEach(() => {
@@ -63,7 +77,6 @@ afterEach(() => {
 const onSubmitStub = vi.fn((_data: Record<string, unknown>) => void 0);
 
 describe("Form Generator Integration Test", () => {
-
   /**
    * Test text input field
    * Make form hook
@@ -183,7 +196,7 @@ describe("Form Generator Integration Test", () => {
     });
     expect(onSubmitStub).toHaveBeenCalledWith({ testField: 10 });
   });
-  
+
   /**
    * Test select input field
    * Make form hook
@@ -230,13 +243,66 @@ describe("Form Generator Integration Test", () => {
      */
     await act(async () => fireEvent.click(submitButton));
     expect(onSubmitStub).toHaveBeenCalledTimes(0);
-    /**
-     * Test valid value
-     */
+    // Test valid value
     await act(async () => {
       fireEvent.change(selectField, { target: { value: "option2" } });
       fireEvent.click(submitButton);
     });
     expect(onSubmitStub).toHaveBeenCalledWith({ testField: "option2" });
+  });
+
+  /**
+   * Test Checkbox input field
+   * Make form hook
+   * Render form field
+   * - test valid value
+   * - check value is correct
+   */
+  it("should render form with checkbox input field", async () => {
+    const formFields = formTestFields.checkbox!;
+    const formGenerator = new FormGeneratorClass(formFields);
+    const schema = z.object(formGenerator.schema);
+    type FormSchemaType = z.infer<typeof schema>;
+    const { result } = renderHook(() =>
+      useForm<FormSchemaType>({
+        resolver: zodResolver(schema),
+        defaultValues: formGenerator.defaultValues,
+      }),
+    );
+    const form = result.current;
+    if (!form) throw new Error("form not found");
+    render(
+      <form
+        data-testid="form"
+        onSubmit={form.handleSubmit((data) => onSubmitStub(data))}
+      >
+        {formGenerator.fields<typeof formFields, FormSchemaType>({
+          form,
+        })}
+        <button data-testid="submit-button" type="submit">
+          Submit
+        </button>
+      </form>,
+    );
+    const submitButton = screen.getByTestId("submit-button");
+    if (!submitButton) throw new Error("submit button not found");
+    const formElement = screen.getByTestId("form");
+    if (!formElement) throw new Error("form not found");
+    const checkboxFieldButton = formElement.querySelector("button");
+    if (!checkboxFieldButton) throw new Error("checkbox field not found");
+
+    // Test valid true value
+    await act(async () => {
+      fireEvent.click(checkboxFieldButton);
+      fireEvent.click(submitButton);
+    });
+    expect(onSubmitStub).toHaveBeenCalledWith({ testField: true });
+
+    // Test valid false value
+    await act(async () => {
+      fireEvent.click(checkboxFieldButton);
+      fireEvent.click(submitButton);
+    });
+    expect(onSubmitStub).toHaveBeenCalledWith({ testField: false });
   });
 });
