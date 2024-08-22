@@ -135,9 +135,9 @@ npx shadcn-ui add select checkbox input textarea calendar popover
 
 Add the form-generator component
 ```bash
-npx react-form-generator
+npx @seifmegahed/form-generator
 ```
-You can also copy the code from the form-generator folder located at `./apps/example/src/components/form-generator` into your project.
+You can also copy the code from the form-generator folder located at `./apps/example/src/form-generator` into your project.
 
 ## Example Usage
 
