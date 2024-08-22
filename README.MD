@@ -1,5 +1,5 @@
 # React Form Generator
->A Type-Safe, Dynamic Form Generator
+**A Type-Safe, Dynamic Form Generator**
 
 An easy way to build type-safe forms with dynamic fields and validations. This component is built on top of `react-hook-form` and `Zod`, and uses `shadcn-ui` components for styling. It is still in development and not published yet.
 
@@ -24,8 +24,8 @@ Writing forms is tedious and repetitive. While react-hook-form is a great librar
 This project aims to solve this problem by providing a reusable form generator component
 The component can also be used to dynamically build forms with type-safety, type inference/ts-autocomplete, and flexible validations.
 
-### Inception
-> A form to generate forms.
+
+**A form to generate forms.**
 
 You can create user-generated forms as shown in the [example](https://seifmegahed-form-generator.vercel.app/) where a form is used to generate fields for another form. 
 
@@ -135,7 +135,7 @@ npx shadcn-ui add select checkbox input textarea calendar popover
 
 Add the form-generator component
 ```bash
-npx @seifmegahed/form-generator
+npx create-form-generator
 ```
 You can also copy the code from the form-generator folder located at `./apps/example/src/form-generator` into your project.
 
