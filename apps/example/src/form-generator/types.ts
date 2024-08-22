@@ -3,14 +3,14 @@ import type { z } from "zod";
 
 export type defaultValueTypes = (string | number | boolean | Date) | undefined;
 
-export enum FieldType {
+export const enum FieldType {
   Text = "text",
   Number = "number",
   Select = "select",
   Textarea = "textarea",
   Checkbox = "checkbox",
   DatePicker = "date-picker",
-}
+};
 
 type GenericFieldType = {
   name: string;

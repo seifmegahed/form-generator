@@ -24,9 +24,8 @@ Writing forms is tedious and repetitive. While react-hook-form is a great librar
 This project aims to solve this problem by providing a reusable form generator component
 The component can also be used to dynamically build forms with type-safety, type inference/ts-autocomplete, and flexible validations.
 
-### Inception
-> A form to generate forms.
 
+> A form to generate forms.
 You can create user-generated forms as shown in the [example](https://seifmegahed-form-generator.vercel.app/) where a form is used to generate fields for another form. 
 
 ### The DB Approach
@@ -85,22 +84,6 @@ return (
   </div>
   ...
 )
-```
-
-## Structure
-This project repo contains two workspaces. 
-
-The `apps` folder contains the example app and the form generator component. 
-
-the `cli` folder contains a cli tool to generate the form generator component files in your project.
-
-```
-.
-├── apps
-│   └── example
-│       └── src
-│           └── form-generator
-└── cli
 ```
 
 ## Installation
@@ -233,9 +216,6 @@ function FormExample() {
   )
 }
 ```
-
-## Contributing
-Contributions are welcome. Please check out the [contribution guidelines](https://github.com/seifmegahed/form-generator/blob/main/CONTRIBUTING.md).
 
 ## License
 MIT License checkout the [license](https://github.com/seifmegahed/form-generator/blob/main/LICENSE.md) file.

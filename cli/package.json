@@ -1,13 +1,35 @@
 {
-  "name": "@react-form-generator/cli",
-  "version": "0.0.1",
-  "description": "CLI for form-builder",
+  "name": "@seifmegahed/form-generator",
+  "version": "0.1.1",
+  "description": "Add form-generator component to your project",
   "license": "MIT",
   "packageManager": "pnpm@9.3.0",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": {
+    "name": "Seif Megahed",
+    "email": "seifmegahed@me.com",
+    "url": "https://github.com/seifmegahed"
+  },
   "bin": {
     "form-builder": "./dist/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seifmegahed/form-generator.git",
+    "directory": "/cli"
+  },
+  "keywords": [
+    "form-generator",
+    "React",
+    "typescript",
+    "shadcn-ui",
+    "react-form-hook",
+    "Zod",
+    "Radix-ui"
+  ],
   "exports": "./dist/index.js",
   "scripts": {
     "dev": "tsup --watch",

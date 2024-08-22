@@ -117,8 +117,10 @@ describe("Form Generator Integration Test", () => {
     if (!formElement) throw new Error("form not found");
     const inputField = formElement.querySelector("input");
     if (!inputField) throw new Error("input field not found");
+    
     await act(async () => fireEvent.click(submitButton));
     expect(onSubmitStub).toHaveBeenCalledTimes(0);
+
     /**
      * TODO: Test required message is displayed
      */
@@ -170,6 +172,7 @@ describe("Form Generator Integration Test", () => {
     if (!formElement) throw new Error("form not found");
     const inputField = formElement.querySelector("input");
     if (!inputField) throw new Error("input field not found");
+
     /**
      * Test empty value
      * TODO: Test required message is displayed
@@ -179,6 +182,7 @@ describe("Form Generator Integration Test", () => {
       fireEvent.click(submitButton);
     });
     expect(onSubmitStub).toHaveBeenCalledTimes(0);
+
     /**
      * Test invalid value
      */
@@ -187,6 +191,7 @@ describe("Form Generator Integration Test", () => {
       fireEvent.click(submitButton);
     });
     expect(onSubmitStub).toHaveBeenCalledTimes(0);
+
     /**
      * Test valid value
      */
@@ -237,12 +242,14 @@ describe("Form Generator Integration Test", () => {
     if (!formElement) throw new Error("form not found");
     const selectField = formElement.querySelector("select");
     if (!selectField) throw new Error("select field not found");
+
     /**
      * Test empty value
      * TODO: Test required message is displayed
      */
     await act(async () => fireEvent.click(submitButton));
     expect(onSubmitStub).toHaveBeenCalledTimes(0);
+
     // Test valid value
     await act(async () => {
       fireEvent.change(selectField, { target: { value: "option2" } });
