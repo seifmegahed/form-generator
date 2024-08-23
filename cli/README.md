@@ -3,6 +3,8 @@
 
 An easy way to build type-safe forms with dynamic fields and validations. This component is built on top of `react-hook-form` and `Zod`, and uses `shadcn-ui` components for styling.
 
+This cli tool is used to generate the form generator component files in your project.
+
 ### Features
 - Single source of truth
 - Type-safety

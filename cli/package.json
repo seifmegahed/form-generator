@@ -1,6 +1,6 @@
 {
   "name": "create-form-generator",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Add form-generator component to your project",
   "license": "MIT",
   "packageManager": "pnpm@9.3.0",
