@@ -1,7 +1,7 @@
 # Create Form Generator
 **A Type-Safe, Dynamic Form Generator React Component**
 
-An easy way to build type-safe forms with dynamic fields and validations. This component is built on top of `react-hook-form` and `Zod`, and uses `shadcn-ui` components for styling. It is still in development and not published yet.
+An easy way to build type-safe forms with dynamic fields and validations. This component is built on top of `react-hook-form` and `Zod`, and uses `shadcn-ui` components for styling.
 
 ### Features
 - Single source of truth
@@ -27,10 +27,7 @@ The component can also be used to dynamically build forms with type-safety, type
 
 **A form to generate forms.**
 
-You can create user-generated forms as shown in the [example](https://seifmegahed-form-generator.vercel.app/) where a form is used to generate fields for another form. 
-
-### The DB Approach
-You can also store form structures in a database and use them to generate forms.
+You can create user-generated forms as shown in the [example](https://seifmegahed-form-generator.vercel.app/) where a form is used to generate fields for another form.
 
 ## How?
 The way you use the component is by passing an array of objects that describe the fields of the form to a class. You can use the schema and default values provided by the class to initialize your form using `react-hook-form`.
@@ -89,7 +86,9 @@ return (
 
 ## Installation
 
+The form generator uses [shadcn-ui](https://ui.shadcn.com) components. 
 Initialize `shadcn-ui`
+
 ```bash
 npx shadcn-ui init
 ```
@@ -116,12 +115,10 @@ Add the following components depending on the fields you want to use.
 npx shadcn-ui add select checkbox input textarea calendar popover
 ```
 
-
 Add the form-generator component
 ```bash
 npx create-form-generator
 ```
-You can also copy the code from the form-generator folder located at `./apps/example/src/form-generator` into your project.
 
 ## Example Usage
 
