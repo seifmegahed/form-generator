@@ -19,7 +19,7 @@ This cli tool is used to generate the form generator component files in your pro
 - Checkbox
 - Date Picker
 
-You can try out the example at [form-generator](https://seifmegahed-form-generator.vercel.app/)
+You can try out the example at [form-generator](https://create-form-generator.vercel.app/)
 
 ## Why?
 Writing forms is tedious and repetitive. While react-hook-form is a great library, it usually results in a lot of repetitive code, and making a reusable type-safe component out of it is a bit complicated.
@@ -29,7 +29,7 @@ The component can also be used to dynamically build forms with type-safety, type
 
 **A form to generate forms.**
 
-You can create user-generated forms as shown in the [example](https://seifmegahed-form-generator.vercel.app/) where a form is used to generate fields for another form.
+You can create user-generated forms as shown in the [example](https://create-form-generator.vercel.app/) where a form is used to generate fields for another form.
 
 ## How?
 The way you use the component is by passing an array of objects that describe the fields of the form to a class. You can use the schema and default values provided by the class to initialize your form using `react-hook-form`.
