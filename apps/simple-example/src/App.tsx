@@ -1,9 +1,11 @@
+import EmployeeForm from "./EmployeeForm"
+
 function App() {
 
   return (
-    <>
-      <h1>Starting point</h1>
-    </>
+    <div className="flex flex-col items-center justify-center h-full w-full">
+      <EmployeeForm />
+    </div>
   )
 }
 
