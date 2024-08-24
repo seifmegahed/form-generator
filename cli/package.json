@@ -1,6 +1,6 @@
 {
   "name": "create-form-generator",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Add form-generator component to your project",
   "license": "MIT",
   "packageManager": "pnpm@9.3.0",
@@ -21,6 +21,7 @@
     "url": "https://github.com/seifmegahed/form-generator.git",
     "directory": "/cli"
   },
+  "homepage": "https://create-form-generator.vercel.app/",
   "keywords": [
     "form-generator",
     "React",
