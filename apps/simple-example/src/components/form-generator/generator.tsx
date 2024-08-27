@@ -1,11 +1,10 @@
 
 
-import type { z } from "zod";
-import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
+import type { ControllerRenderProps, Path, UseFormReturn } from "react-hook-form";
 
 import { Form, FormField } from "@/components/ui/form";
 
-import type { FieldDataType } from "./types";
+import type { FieldDataType, FormSchema } from "./types";
 import { reduceDefaultValues, reduceSchema } from "./utils";
 import FieldSelector from "./field-selector";
 
@@ -31,13 +30,7 @@ class FormGenerator<T extends readonly FieldDataType[]> {
       [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
     };
   }
-
-  fields<
-    T extends readonly FieldDataType[],
-    FormSchema extends {
-      [K in T[number]["name"]]: z.infer<Extract<T[number], { name: K }>["schema"]>;
-    },
-  >({ form }: { form: UseFormReturn<FormSchema> }) {
+  fields(form: UseFormReturn<FormSchema<T>>) {
     return (
       <Form {...form}>
         {this.formData.map((fieldData) =>
@@ -45,11 +38,15 @@ class FormGenerator<T extends readonly FieldDataType[]> {
             <FormField
               key={fieldData.name}
               control={form.control}
-              name={fieldData.name as  FormSchema["name"]}
+              name={fieldData.name as Path<FormSchema<T>>}
               render={({ field }) => (
-                <FieldSelector<typeof fieldData>
+                <FieldSelector
                   fieldData={fieldData}
-                  field={field as ControllerRenderProps} 
+                  field={
+                    field as ControllerRenderProps<
+                      FormSchema<T>[typeof fieldData.name]
+                    >
+                  }
                 />
               )}
             />

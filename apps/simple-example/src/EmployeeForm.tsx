@@ -54,7 +54,7 @@ const formFields = [
     label: "Notes",
     type: FieldType.Textarea,
     default: "",
-    schema: z.string().optional(),
+    schema: z.string(),
   },
 ] as const;
 
@@ -62,11 +62,10 @@ function EmployeeForm() {
   const formGenerator = new FormGenerator<typeof formFields>(formFields);
   const schema = z.object(formGenerator.schema);
   type FormSchemaType = z.infer<typeof schema>;
-  const defaultValues = formGenerator.defaultValues;
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(schema),
-    defaultValues: defaultValues,
+    defaultValues: formGenerator.defaultValues,
   });
 
   const onSubmit = (data: FormSchemaType) => {
@@ -77,7 +76,7 @@ function EmployeeForm() {
     <div className="w-full h-full max-w-screen-md bg-slate-100 p-5 m-5 rounded-xl">
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <h1 className="text-2xl font-bold">Employee Form</h1>
-        {formGenerator.fields({ form })}
+        {formGenerator.fields(form)}
         <div className="flex justify-end py-5 w-full">
           <Button type="submit" className="w-60">
             SAVE

@@ -1,4 +1,3 @@
-import type { UseFormReturn } from "react-hook-form";
 import type { z } from "zod";
 
 export type defaultValueTypes = (string | number | boolean | Date) | undefined;
@@ -10,7 +9,7 @@ export const enum FieldType {
   Textarea = "textarea",
   Checkbox = "checkbox",
   DatePicker = "date-picker",
-};
+}
 
 type GenericFieldType = {
   name: string;
@@ -62,9 +61,6 @@ export type FieldDataType =
   | CheckboxFieldType
   | DatePickerFieldType;
 
-export interface FormGeneratorProps<
-  T extends readonly FieldDataType[],
-  FormSchema extends { [K in T[number]["name"]]: z.infer<T[number]["schema"]> },
-> {
-  form: UseFormReturn<FormSchema>;
-}
+export type FormSchema<T extends readonly FieldDataType[]> = {
+  [K in T[number]["name"]]: z.infer<Extract<T[number], { name: K }>["schema"]>;
+};

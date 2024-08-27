@@ -1,3 +1,6 @@
+
+
+
 import {
   Select,
   SelectContent,
@@ -6,9 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import type { InputProps } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import type { TextareaProps } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormItem, FormMessage } from "@/components/ui/form";
 import DatePicker from "./date-picker";
@@ -20,19 +21,22 @@ import { cn } from "@/lib/utils";
 import FieldWrapper from "./field-wrapper";
 import { FieldType, type FieldDataType } from "./types";
 
-type FormSchema<T extends FieldDataType> = {
+type FieldSchema<T extends FieldDataType> = {
   [K in T["name"]]: z.infer<Extract<T, { name: K }>["schema"]>;
 };
 
-interface FieldSelectorProps<T extends FieldDataType> {
-  fieldData: T;
-  field: ControllerRenderProps<FormSchema<T>, Path<FormSchema<T>>>;
+interface FieldSelectorProps {
+  fieldData: FieldDataType;
+  field: ControllerRenderProps<
+    FieldSchema<FieldDataType>,
+    Path<FieldSchema<FieldDataType>>
+  >;
 }
 
-function FieldSelector<T extends FieldDataType>({
-  field,
+function FieldSelector({
   fieldData,
-}: FieldSelectorProps<T>) {
+  field,
+}: FieldSelectorProps) {
   switch (fieldData.type) {
         case FieldType.Select:
       return (
@@ -63,23 +67,20 @@ function FieldSelector<T extends FieldDataType>({
         case FieldType.Text:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
-          <Input
-            {...field}
-            value={(field.value as string) ?? ""}
-          />
+          <Input {...field} value={(field.value as string) ?? ""} />
         </FieldWrapper>
       );
     case FieldType.Number:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
-          <Input {...(field as InputProps)} type="number" />
+          <Input {...field} type="number" />
         </FieldWrapper>
       );
         case FieldType.Textarea:
       return (
         <FieldWrapper className={fieldData.className} label={fieldData.label}>
           <Textarea
-            {...(field as TextareaProps)}
+            {...field}
             rows={6}
             className="resize-none"
             maxLength={512}
