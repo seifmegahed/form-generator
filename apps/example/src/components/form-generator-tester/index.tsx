@@ -39,9 +39,7 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
           Form Generator Tester
         </p>
       </div>
-      <div className="grid gap-x-3 md:grid-cols-4">
-        {formData.fields<typeof formFields, schemaDataType>({ form })}
-      </div>
+      <div className="grid gap-x-3 md:grid-cols-4">{formData.fields(form)}</div>
       <div className="flex justify-end py-5">
         <Button
           type="submit"

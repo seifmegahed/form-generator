@@ -103,9 +103,7 @@ describe("Form Generator Integration Test", () => {
         data-testid="form"
         onSubmit={form.handleSubmit((data) => onSubmitStub(data))}
       >
-        {formGenerator.fields<typeof formFields, FormSchemaType>({
-          form,
-        })}
+        {formGenerator.fields(form)}
         <button data-testid="submit-button" type="submit">
           Submit
         </button>
@@ -117,7 +115,7 @@ describe("Form Generator Integration Test", () => {
     if (!formElement) throw new Error("form not found");
     const inputField = formElement.querySelector("input");
     if (!inputField) throw new Error("input field not found");
-    
+
     await act(async () => fireEvent.click(submitButton));
     expect(onSubmitStub).toHaveBeenCalledTimes(0);
 
@@ -158,9 +156,7 @@ describe("Form Generator Integration Test", () => {
         data-testid="form"
         onSubmit={form.handleSubmit((data) => onSubmitStub(data))}
       >
-        {formGenerator.fields<typeof formFields, FormSchemaType>({
-          form,
-        })}
+        {formGenerator.fields(form)}
         <button data-testid="submit-button" type="submit">
           Submit
         </button>
@@ -228,9 +224,7 @@ describe("Form Generator Integration Test", () => {
         data-testid="form"
         onSubmit={form.handleSubmit((data) => onSubmitStub(data))}
       >
-        {formGenerator.fields<typeof formFields, FormSchemaType>({
-          form,
-        })}
+        {formGenerator.fields(form)}
         <button data-testid="submit-button" type="submit">
           Submit
         </button>
@@ -283,9 +277,7 @@ describe("Form Generator Integration Test", () => {
         data-testid="form"
         onSubmit={form.handleSubmit((data) => onSubmitStub(data))}
       >
-        {formGenerator.fields<typeof formFields, FormSchemaType>({
-          form,
-        })}
+        {formGenerator.fields(form)}
         <button data-testid="submit-button" type="submit">
           Submit
         </button>

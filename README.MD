@@ -56,16 +56,16 @@ const formData: FieldDataType[] = [ /*...*/ ];
 function FormExample() {
 ...
 // Initialize the form generator
-const formClass = new FormGenerator<typeof formData>(formData)
+const formGenerator = new FormGenerator<typeof formData>(formData)
 
-const schema = z.object(formClass.schema)
+const schema = z.object(formGenerator.schema)
 
 type SchemaType = z.infer<typeof schema>
 
 // Create a react-hook-form form instance
 const form = useForm<SchemaType>({
   resolver: zodResolver(schema),
-  defaultValues: formClass.defaultValues,
+  defaultValues: formGenerator.defaultValues,
   })
 ...
 }
@@ -75,11 +75,9 @@ And inside the tsx you can pass the fields like this:
 ```tsx
 return (
   ...
-  <div>
-    {formClass.fields<typeof formData, SchemaType>({
-      form,
-    })}
-  </div>
+  <form>
+    {formGenerator.fields(form)}
+  </form>
   ...
 )
 ```
@@ -196,15 +194,15 @@ const formData: FieldDataType[] = [
 ] as const;
 
 function FormExample() {
-  const formClass = new FormGenerator<typeof formData>(formData)
+  const formGenerator = new FormGenerator<typeof formData>(formData)
 
-  const schema = z.object(formClass.schema)
+  const schema = z.object(formGenerator.schema)
 
   type SchemaType = z.infer<typeof schema>
 
   const form = useForm<SchemaType>({
     resolver: zodResolver(schema),
-    defaultValues: formClass.defaultValues,
+    defaultValues: formGenerator.defaultValues,
   })
 
   const onSubmit = (data: SchemaType) => {
@@ -215,9 +213,7 @@ function FormExample() {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid gap-x-3 md:grid-cols-4">
-        {formClass.fields<typeof formData, SchemaType>({
-          form,
-        })}
+        {formGenerator.fields(form)}
       </div>
       <div className="flex justify-end py-5">
         <Button

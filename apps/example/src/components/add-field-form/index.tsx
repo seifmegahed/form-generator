@@ -95,10 +95,14 @@ const formFields = [
     type: FieldType.Select,
     className: "md:col-span-2",
     default: undefined,
-    options: Object.values(FieldType).map((type) => ({
-      label: type.toUpperCase(),
-      value: type,
-    })),
+    options: [
+      { label: "Text", value: FieldType.Text },
+      { label: "Number", value: FieldType.Number },
+      { label: "Select", value: FieldType.Select },
+      { label: "Textarea", value: FieldType.Textarea },
+      { label: "Checkbox", value: FieldType.Checkbox },
+      { label: "Date Picker", value: FieldType.DatePicker },
+    ],
     schema: z.string(),
   },
   {
@@ -169,9 +173,7 @@ function AddFieldForm({
       onSubmit={form.handleSubmit(handleSubmit)}
     >
       <div className="grid w-full gap-x-3 md:grid-cols-4">
-        {formData.fields<typeof formFields, schemaDataType>({
-          form,
-        })}
+        {formData.fields(form)}
       </div>
       <div className="flex justify-end">
         <Button type="submit" className="w-60">
