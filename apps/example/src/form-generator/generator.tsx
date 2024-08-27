@@ -22,12 +22,18 @@ class FormGenerator<T extends readonly FieldDataType[]> {
   constructor(formData: T) {
     this.formData = formData;
     this.schema = formData.reduce(
-      (acc, field) => ({ [field.name]: field.schema, ...acc }),
+      (acc, field) => {
+        acc[field.name as keyof typeof acc] = field.schema;
+        return acc;
+      },
       {} as ReducedCollectionType<T, "schema">,
     );
 
     this.defaultValues = formData.reduce(
-      (acc, field) => ({ [field.name]: field.default, ...acc }),
+      (acc, field) => {
+        acc[field.name as keyof typeof acc] = field.default;
+        return acc;
+      },
       {} as ReducedCollectionType<T, "default">,
     );
   }
