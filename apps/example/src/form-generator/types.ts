@@ -14,7 +14,7 @@ export const enum FieldType {
 type GenericFieldType = {
   name: string;
   label: string;
-  schema: z.ZodType;
+  schema: z.ZodTypeAny;
   hidden?: boolean;
   className?: string;
 };
