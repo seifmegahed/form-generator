@@ -1,7 +1,5 @@
 import type { z } from "zod";
 
-export type defaultValueTypes = (string | number | boolean | Date) | undefined;
-
 export const enum FieldType {
   Text = "text",
   Number = "number",

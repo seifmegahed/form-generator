@@ -1,5 +1,3 @@
-
-
 import type { ControllerRenderProps, Path, UseFormReturn } from "react-hook-form";
 
 import { Form, FormField } from "@/components/ui/form";
@@ -30,6 +28,7 @@ class FormGenerator<T extends readonly FieldDataType[]> {
       [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
     };
   }
+  
   fields(form: UseFormReturn<FormSchema<T>>) {
     return (
       <Form {...form}>
