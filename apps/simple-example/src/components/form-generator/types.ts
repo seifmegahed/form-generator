@@ -1,5 +1,7 @@
 import type { z } from "zod";
 
+export type defaultValueTypes = (string | number | boolean | Date) | undefined;
+
 export const enum FieldType {
   Text = "text",
   Number = "number",
@@ -12,7 +14,7 @@ export const enum FieldType {
 type GenericFieldType = {
   name: string;
   label: string;
-  schema: z.ZodType;
+  schema: z.ZodTypeAny;
   hidden?: boolean;
   className?: string;
 };

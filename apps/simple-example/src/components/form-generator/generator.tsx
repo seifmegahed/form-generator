@@ -1,34 +1,41 @@
-import type { ControllerRenderProps, Path, UseFormReturn } from "react-hook-form";
+import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 
 import { Form, FormField } from "@/components/ui/form";
 
 import type { FieldDataType, FormSchema } from "./types";
-import { reduceDefaultValues, reduceSchema } from "./utils";
 import FieldSelector from "./field-selector";
+
+type ReducedCollectionType<
+  T extends readonly FieldDataType[],
+  P extends keyof T[number],
+> = {
+  [K in T[number]["name"]]: Extract<T[number], { name: K }>[P];
+};
 
 class FormGenerator<T extends readonly FieldDataType[]> {
   readonly formData: T;
-  readonly schema: {
-    [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
-  };
-  readonly defaultValues: {
-    [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
-  };
+  readonly schema: ReducedCollectionType<T, "schema">;
+  readonly defaultValues: ReducedCollectionType<T, "default">;
 
   constructor(formData: T) {
     this.formData = formData;
-    this.schema = formData.reduce(reduceSchema<T[number]>, {}) as {
-      [K in T[number]["name"]]: Extract<T[number], { name: K }>["schema"];
-    };
+    this.schema = formData.reduce(
+      (acc, field) => {
+        acc[field.name as keyof typeof acc] = field.schema;
+        return acc;
+      },
+      {} as ReducedCollectionType<T, "schema">,
+    );
 
     this.defaultValues = formData.reduce(
-      reduceDefaultValues<T[number]>,
-      {},
-    ) as {
-      [K in T[number]["name"]]: Extract<T[number], { name: K }>["default"];
-    };
+      (acc, field) => {
+        acc[field.name as keyof typeof acc] = field.default;
+        return acc;
+      },
+      {} as ReducedCollectionType<T, "default">,
+    );
   }
-  
+
   fields(form: UseFormReturn<FormSchema<T>>) {
     return (
       <Form {...form}>
@@ -37,13 +44,13 @@ class FormGenerator<T extends readonly FieldDataType[]> {
             <FormField
               key={fieldData.name}
               control={form.control}
-              name={fieldData.name as Path<FormSchema<T>>}
+              name={fieldData.name as FormSchema<T>[keyof FormSchema<T>]}
               render={({ field }) => (
                 <FieldSelector
                   fieldData={fieldData}
                   field={
                     field as ControllerRenderProps<
-                      FormSchema<T>[typeof fieldData.name]
+                      FormSchema<T>[keyof FormSchema<T>]
                     >
                   }
                 />
