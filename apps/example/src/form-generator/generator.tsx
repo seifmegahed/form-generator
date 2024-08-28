@@ -1,11 +1,16 @@
 "use client";
 
 import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
+import type { z } from "zod";
 
 import { Form, FormField } from "@/components/ui/form";
 
-import type { FieldDataType, FormSchema } from "./types";
+import type { FieldDataType } from "./types";
 import FieldSelector from "./field-selector";
+
+type FormSchema<T extends readonly FieldDataType[]> = {
+  [K in T[number]["name"]]: z.infer<Extract<T[number], { name: K }>["schema"]>;
+};
 
 type ReducedCollectionType<
   T extends readonly FieldDataType[],

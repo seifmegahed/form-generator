@@ -1,7 +1,5 @@
 import type { z } from "zod";
 
-export type defaultValueTypes = (string | number | boolean | Date) | undefined;
-
 export const enum FieldType {
   Text = "text",
   Number = "number",
@@ -60,7 +58,3 @@ export type FieldDataType =
   | TextareaFieldType
   | CheckboxFieldType
   | DatePickerFieldType;
-
-export type FormSchema<T extends readonly FieldDataType[]> = {
-  [K in T[number]["name"]]: z.infer<Extract<T[number], { name: K }>["schema"]>;
-};
