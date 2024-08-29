@@ -125,18 +125,13 @@ npx create-form-generator
 ```tsx
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { 
-  zodResolver, 
-  type FieldDataType, 
-  FieldType, 
-  emptyToUndefined 
-} from '@hookform/resolvers/zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { FormGenerator } from '@/components/form-generator'
+import { FormGenerator, FieldType, emptyToUndefined } from '@/components/form-generator'
 
 import { Button } from '@/components/ui/button'
 
-const formData: FieldDataType[] = [
+const formData = [
   {
     name: 'name',
     label: 'Name',
