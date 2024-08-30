@@ -1,6 +1,6 @@
 {
   "name": "create-form-generator",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Add form-generator component to your project",
   "license": "MIT",
   "packageManager": "pnpm@9.3.0",
@@ -37,7 +37,7 @@
     "build": "tsup",
     "lint": "tsc",
     "clean": "rm -rf dist",
-    "link": "npm unlink form-builder && npm link ."
+    "link": "npm unlink form-generator && npm link ."
   },
   "files": [
     "dist"
