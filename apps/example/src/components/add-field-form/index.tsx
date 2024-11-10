@@ -11,23 +11,23 @@ const schemas = (required: boolean, type: FieldType) => {
     case FieldType.Text:
       return required
         ? z.preprocess(emptyToUndefined, z.string())
-        : z.string().optional();
+        : z.preprocess(emptyToUndefined, z.string().optional());
     case FieldType.Number:
       return required
         ? z.preprocess(emptyToUndefined, z.number())
-        : z.number().optional();
+        : z.preprocess(emptyToUndefined, z.number().optional());
     case FieldType.Select:
       return required ? z.string() : z.string().optional();
     case FieldType.Textarea:
       return required
         ? z.preprocess(emptyToUndefined, z.string())
-        : z.string().optional();
+        : z.preprocess(emptyToUndefined, z.string().optional());
     case FieldType.Checkbox:
       return z.boolean();
     case FieldType.DatePicker:
       return required ? z.date() : z.date().optional();
     default:
-      return z.string().optional();
+      return z.preprocess(emptyToUndefined, z.string().optional());
   }
 };
 
