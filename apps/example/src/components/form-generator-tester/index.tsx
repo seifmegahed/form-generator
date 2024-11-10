@@ -15,7 +15,25 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
     [formFields],
   );
 
-  const schema = useMemo(() => z.object(formData.schema), [formData]);
+  const schema = useMemo(
+    () =>
+      z.object(formData.schema).superRefine((data, ctx) => {
+        const registrationNumber = parseFloat(
+          data.registrationNumber as string,
+        );
+        if (isNaN(registrationNumber)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Pretty cool right? Now enter a valid number",
+            path: ["registrationNumber"],
+          });
+          return false;
+        }
+        data.registrationNumber = registrationNumber;
+        return data;
+      }),
+    [formData],
+  );
 
   type schemaDataType = z.infer<typeof schema>;
 

@@ -3,10 +3,7 @@
 import { z } from "zod";
 import { useState } from "react";
 import FormTester from "@/components/form-generator-tester";
-import {
-  emptyToUndefined,
-  type FieldDataType,
-} from "@/form-generator";
+import { emptyToUndefined, type FieldDataType } from "@/form-generator";
 import { FieldType } from "@/form-generator";
 import { Button } from "@/components/ui/button";
 import Dialog from "@/components/dialog";
@@ -43,13 +40,26 @@ const formFields = [
     label: "Age",
     type: FieldType.Number,
     default: 0,
-    schema: z.preprocess(
-      emptyToUndefined,
-      z.preprocess(
-        (val) => Number(val),
-        z.number({ invalid_type_error: "Age must be a number" }),
-      ),
-    ),
+    schema: z.preprocess(emptyToUndefined, z.number()),
+  } as const,
+  {
+    name: "registrationNumber",
+    label: "Registration Number",
+    className: "md:col-span-4",
+    type: FieldType.Text,
+    default: "",
+    schema: z.preprocess(emptyToUndefined, z.string()),
+    description: `
+      Okay, so one of the worse things about using zod with react-hook-form is that it expects the default values to match the type of the schema. 
+      Usually this is fine and you can just use a preprocessor to make empty strings default to undefined. 
+      However, in the case of a number, it gets a bit tricky. 
+      If you do not provide a default value as a number, typescript will complain. 
+      Look at the age field! it looks ridiculous with that zero, also the number input field is just a bit weird for me. 
+      So, what I usually like to do is use a regular text input field with an emptyToUndefined preprocessor then a string schema with an empty string as the default value. 
+      Then I use the superRefine Method on the schema  to parse the string to a float or an int then check if NaN and complain if it is indeed NaN.
+      If the value is indeed a number, I return the data with the parsed number. 
+      Try it out and check the console for the result, but first test an invalid number to see if it complains.
+      Trust me, once you try it you will never use number fields ever again....`,
   } as const,
   {
     name: "isStudent",

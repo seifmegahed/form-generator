@@ -33,7 +33,7 @@
   ],
   "exports": "./dist/index.js",
   "scripts": {
-    "dev": "tsup --watch",
+    "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
     "build": "tsup",
     "lint": "tsc",
     "clean": "rm -rf dist",
