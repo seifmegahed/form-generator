@@ -30,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 //split//checkbox
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormItem, FormMessage } from "@/components/ui/form";
+import { FormDescription, FormItem, FormMessage } from "@/components/ui/form";
 //split//date-picker
 import DatePicker from "./date-picker";
 
@@ -54,10 +54,7 @@ interface FieldSelectorProps {
   >;
 }
 
-function FieldSelector({
-  fieldData,
-  field,
-}: FieldSelectorProps) {
+function FieldSelector({ fieldData, field }: FieldSelectorProps) {
   switch (fieldData.type) {
     //split//select
     case FieldType.Select:
@@ -89,20 +86,32 @@ function FieldSelector({
     //split//text
     case FieldType.Text:
       return (
-        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+        <FieldWrapper
+          className={fieldData.className}
+          label={fieldData.label}
+          description={fieldData.description}
+        >
           <Input {...field} value={(field.value as string) ?? ""} />
         </FieldWrapper>
       );
     case FieldType.Number:
       return (
-        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+        <FieldWrapper
+          className={fieldData.className}
+          label={fieldData.label}
+          description={fieldData.description}
+        >
           <Input {...field} type="number" />
         </FieldWrapper>
       );
     //split//textarea
     case FieldType.Textarea:
       return (
-        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+        <FieldWrapper
+          className={fieldData.className}
+          label={fieldData.label}
+          description={fieldData.description}
+        >
           <Textarea
             {...field}
             rows={6}
@@ -116,19 +125,22 @@ function FieldSelector({
       return (
         <FormItem
           className={cn(
-            "flex items-center justify-between py-4",
+            "flex h-full flex-col justify-center gap-2",
             fieldData.className,
           )}
         >
-          <span className="text-lg text-muted-foreground">
-            {fieldData.label}
-          </span>
-          <Checkbox
-            checked={field.value as boolean}
-            onCheckedChange={field.onChange}
-            className="size-5 border-2"
-          />
+          <div className="flex items-center justify-between">
+            <span className="text-lg text-muted-foreground">
+              {fieldData.label}
+            </span>
+            <Checkbox
+              checked={field.value as boolean}
+              onCheckedChange={field.onChange}
+              className="size-5 border-2"
+            />
+          </div>
           <FormMessage />
+          <FormDescription>{fieldData.description}</FormDescription>
         </FormItem>
       );
     //split//date-picker
@@ -136,19 +148,22 @@ function FieldSelector({
       return (
         <FormItem
           className={cn(
-            "flex items-center justify-between py-4",
+            "flex h-full flex-col justify-center gap-2",
             fieldData.className,
           )}
         >
-          <span className="text-lg text-muted-foreground">
-            {fieldData.label}
-          </span>
-          <DatePicker
-            date={field.value as Date}
-            onChange={field.onChange}
-            allowFuture={fieldData.allowFuture}
-          />
+          <div className="flex items-center justify-between">
+            <span className="text-lg text-muted-foreground">
+              {fieldData.label}
+            </span>
+            <DatePicker
+              date={field.value as Date}
+              onChange={field.onChange}
+              allowFuture={fieldData.allowFuture}
+            />
+          </div>
           <FormMessage />
+          <FormDescription>{fieldData.description}</FormDescription>
         </FormItem>
       );
     //split//body

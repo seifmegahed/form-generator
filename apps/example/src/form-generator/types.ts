@@ -15,6 +15,7 @@ type GenericFieldType = {
   schema: z.ZodTypeAny;
   hidden?: boolean;
   className?: string;
+  description?: string;
 };
 
 export type TextFieldType = GenericFieldType & {
