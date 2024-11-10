@@ -114,6 +114,14 @@ const formFields = [
     schema: z.string(),
   },
   {
+    name: "description",
+    label: "Description",
+    type: FieldType.Textarea,
+    className: "md:col-span-4",
+    default: "",
+    schema: z.preprocess(emptyToUndefined, z.string()),
+  },
+  {
     name: "options",
     label: "Options",
     type: FieldType.Textarea,
@@ -155,6 +163,7 @@ function AddFieldForm({
             default: getDefaultValue(FieldType.Select, data.default),
             schema: schemas(data.required, FieldType.Select),
             options: data.options.split(",").map((option) => option.trim()),
+            description: data.description,
           } as FieldDataType)
         : ({
             name: data.name,
@@ -163,6 +172,7 @@ function AddFieldForm({
             type: data.type as FieldType,
             default: getDefaultValue(data.type as FieldType, data.default),
             schema: schemas(data.required, data.type as FieldType),
+            description: data.description,
           } as FieldDataType);
     onSubmit(field);
   };
