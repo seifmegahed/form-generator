@@ -57,7 +57,7 @@ const formFields = [
       Look at the age field! it looks ridiculous with that zero, also the number input field is just a bit weird for me. 
       So, what I usually like to do is use a regular text input field with an emptyToUndefined preprocessor then a string schema with an empty string as the default value. 
       Then I use the superRefine Method on the schema  to parse the string to a float or an int then check if NaN and complain if it is indeed NaN.
-      If the value is indeed a number, I return the data with the parsed number. 
+      If the value is a valid number, I return the data with the parsed number. 
       Try it out and check the console for the result, but first test an invalid number to see if it complains.
       Trust me, once you try it you will never use number fields ever again....`,
   } as const,
