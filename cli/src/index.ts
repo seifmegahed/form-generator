@@ -61,41 +61,55 @@ program
       const fileUrl = files[fileKey as keyof typeof files].url;
       const fileName = files[fileKey as keyof typeof files].file;
       const fileContent = await fetch(fileUrl).then((res) => res.text());
-      if (fileKey === "selector") {
-        const selectorComponent = new SelectorTransformer(fileContent);
-        await fs.writeFile(
-          path.join(formBuilderDirPath, files[fileKey].file),
-          selectorComponent
-            .filterFields(configs.fields)
-            .removeComments()
-            .rscPrepare(configs.rsc)
-            .replaceUtilsAlias(configs.utils)
-            .replaceComponentsAlias(configs.components).file,
-          { flag: "w+" }
-        );
-      } 
-      else if (fileKey === "datePicker") {
-        if(!configs.fields.includes("date-picker")) return;
-        const datePickerComponent = new FileTransformer(fileContent);
-        await fs.writeFile(
-          path.join(formBuilderDirPath, files[fileKey].file),
-          datePickerComponent
-            .rscPrepare(configs.rsc)
-            .replaceUtilsAlias(configs.utils)
-            .replaceComponentsAlias(configs.components).file,
-          { flag: "w+" }
-        );
-      }
-      else {
-        const component = new FileTransformer(fileContent);
-        await fs.writeFile(
-          path.join(formBuilderDirPath, fileName),
-          component
-            .rscPrepare(configs.rsc)
-            .replaceUtilsAlias(configs.utils)
-            .replaceComponentsAlias(configs.components).file,
-          { flag: "w+" }
-        );
+      switch (fileKey) {
+        case "selector":
+          const selectorComponent = new SelectorTransformer(fileContent);
+          await fs.writeFile(
+            path.join(formBuilderDirPath, files[fileKey].file),
+            selectorComponent
+              .filterFields(configs.fields)
+              .removeComments()
+              .rscPrepare(configs.rsc)
+              .replaceUtilsAlias(configs.utils)
+              .replaceComponentsAlias(configs.components).file,
+            { flag: "w+" }
+          );
+          break;
+        case "datePicker":
+          if (!configs.fields.includes("date-picker")) return;
+          const datePickerComponent = new FileTransformer(fileContent);
+          await fs.writeFile(
+            path.join(formBuilderDirPath, files[fileKey].file),
+            datePickerComponent
+              .rscPrepare(configs.rsc)
+              .replaceUtilsAlias(configs.utils)
+              .replaceComponentsAlias(configs.components).file,
+            { flag: "w+" }
+          );
+          break;
+        case "comboSelect":
+          if (!configs.fields.includes("combo-select")) return;
+          const comboSelectComponent = new FileTransformer(fileContent);
+          await fs.writeFile(
+            path.join(formBuilderDirPath, files[fileKey].file),
+            comboSelectComponent
+              .rscPrepare(configs.rsc)
+              .replaceUtilsAlias(configs.utils)
+              .replaceComponentsAlias(configs.components).file,
+            { flag: "w+" }
+          );
+          break;
+        default:
+          const component = new FileTransformer(fileContent);
+          await fs.writeFile(
+            path.join(formBuilderDirPath, fileName),
+            component
+              .rscPrepare(configs.rsc)
+              .replaceUtilsAlias(configs.utils)
+              .replaceComponentsAlias(configs.components).file,
+            { flag: "w+" }
+          );
+          break;
       }
     });
   });

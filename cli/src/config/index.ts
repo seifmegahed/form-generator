@@ -31,13 +31,17 @@ export const configPrompts: PromptObject[] = [
     name: "fields",
     message:
       "Select the fields you want to include in the component \n (Use space to select/unselect multiple)",
-
     instructions: false,
     min: 1,
 
     choices: [
       { title: "Text", value: FieldOptions.Text, selected: true },
       { title: "Select", value: FieldOptions.Select, selected: true },
+      {
+        title: "Combo Select",
+        value: FieldOptions.ComboSelect,
+        selected: true,
+      },
       { title: "Textarea", value: FieldOptions.Textarea, selected: true },
       { title: "Checkbox", value: FieldOptions.Checkbox, selected: true },
       { title: "Date Picker", value: FieldOptions.DatePicker, selected: true },

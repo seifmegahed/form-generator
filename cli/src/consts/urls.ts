@@ -9,6 +9,7 @@ const fileNames = {
   types: "types.ts",
   utils: "utils.ts",
   datePicker: "date-picker.tsx",
+  comboSelect: "combo-select.tsx",
 };
 
 const files = {
@@ -27,6 +28,10 @@ const files = {
   datePicker: {
     url: parentRepoUrl + fileNames.datePicker,
     file: fileNames.datePicker,
+  },
+  comboSelect: {
+    url: parentRepoUrl + fileNames.comboSelect,
+    file: fileNames.comboSelect,
   },
 } as const;
 
