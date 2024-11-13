@@ -21,10 +21,10 @@ function FieldWrapper({
 }) {
   return (
     <FormItem className={cn("py-2", className)}>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel className="text-md">{label}</FormLabel>
       {children}
       <FormMessage />
-      <FormDescription>{description}</FormDescription>
+      <FormDescription className="text-xs">{description}</FormDescription>
     </FormItem>
   );
 }

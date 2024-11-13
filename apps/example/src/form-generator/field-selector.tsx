@@ -61,7 +61,11 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
     //split//select
     case FieldType.Select:
       return (
-        <FieldWrapper className={fieldData.className} label={fieldData.label}>
+        <FieldWrapper
+          className={fieldData.className}
+          label={fieldData.label}
+          description={fieldData.description}
+        >
           <Select
             onValueChange={field.onChange}
             value={(field.value as string) ?? ""}
@@ -142,7 +146,9 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             />
           </div>
           <FormMessage />
-          <FormDescription>{fieldData.description}</FormDescription>
+          <FormDescription className="text-xs">
+            {fieldData.description}
+          </FormDescription>
         </FormItem>
       );
     //split//date-picker
@@ -165,7 +171,9 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             />
           </div>
           <FormMessage />
-          <FormDescription>{fieldData.description}</FormDescription>
+          <FormDescription className="text-xs">
+            {fieldData.description}
+          </FormDescription>
         </FormItem>
       );
     //split//combo-select

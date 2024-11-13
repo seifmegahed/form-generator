@@ -35,6 +35,10 @@ const formFields = [
     default: undefined,
     options: ["Computer Science", "Mathematics", "Physics"],
     schema: z.string(),
+    description: `
+      Select is a select field that allows you to select from a list of options. 
+      It is a great way to add a dropdown with a search bar to your form.
+      `,
   } as const,
   {
     name: "age",
