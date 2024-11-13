@@ -7,6 +7,7 @@ export const enum FieldType {
   Textarea = "textarea",
   Checkbox = "checkbox",
   DatePicker = "date-picker",
+  ComboSelect = "combo-select",
 }
 
 type GenericFieldType = {
@@ -52,10 +53,20 @@ export type DatePickerFieldType = GenericFieldType & {
   allowFuture?: boolean;
 };
 
+export type ComboSelect = GenericFieldType & {
+  type: FieldType.ComboSelect;
+  default: string | undefined;
+  options: { value: string; label: string }[] | string[];
+  searchMessage?: string;
+  notFoundMessage?: string;
+  selectMessage?: string;
+};
+
 export type FieldDataType =
   | TextFieldType
   | NumberFieldType
   | SelectFieldType
   | TextareaFieldType
   | CheckboxFieldType
-  | DatePickerFieldType;
+  | DatePickerFieldType
+  | ComboSelect;

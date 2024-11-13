@@ -33,6 +33,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { FormDescription, FormItem, FormMessage } from "@/components/ui/form";
 //split//date-picker
 import DatePicker from "./date-picker";
+//split//combo-select
+import ComboSelect from "./combo-select";
 
 //split//body
 import type { z } from "zod";
@@ -165,6 +167,24 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           <FormMessage />
           <FormDescription>{fieldData.description}</FormDescription>
         </FormItem>
+      );
+    //split//combo-select
+    case FieldType.ComboSelect:
+      return (
+        <FieldWrapper
+          className={fieldData.className}
+          label={fieldData.label}
+          description={fieldData.description}
+        >
+          <ComboSelect
+            value={field.value as string}
+            onChange={field.onChange}
+            options={fieldData.options}
+            selectMessage={fieldData.selectMessage}
+            searchMessage={fieldData.searchMessage}
+            notFoundMessage={fieldData.notFoundMessage}
+          />
+        </FieldWrapper>
       );
     //split//body
     default:

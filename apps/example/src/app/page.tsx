@@ -8,6 +8,7 @@ import { FieldType } from "@/form-generator";
 import { Button } from "@/components/ui/button";
 import Dialog from "@/components/dialog";
 import AddFieldForm from "@/components/add-field-form";
+import { countries } from "@/lib/countries";
 
 const formFields = [
   {
@@ -60,6 +61,22 @@ const formFields = [
       If the value is a valid number, I return the data with the parsed number. 
       Try it out and check the console for the result, but first test an invalid number to see if it complains.
       Trust me, once you try it you will never use number fields ever again....`,
+  } as const,
+  {
+    name: "country",
+    label: "Country",
+    className: "md:col-span-4",
+    type: FieldType.ComboSelect,
+    default: undefined,
+    options: countries,
+    selectMessage: "Select Country",
+    searchMessage: "Search Countries",
+    notFoundMessage: "No Country Found",
+    schema: z.string(),
+    description: `
+      Combo Select is a select field that allows you to search for options. 
+      It is a great way to add a dropdown with a search bar to your form.
+      `,
   } as const,
   {
     name: "isStudent",
