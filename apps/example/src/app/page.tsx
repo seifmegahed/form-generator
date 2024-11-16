@@ -35,10 +35,8 @@ const formFields = [
     default: undefined,
     options: ["Computer Science", "Mathematics", "Physics"],
     schema: z.string(),
-    description: `
-      Select is a select field that allows you to select from a list of options. 
-      It is a great way to add a dropdown with a search bar to your form.
-      `,
+    description:
+      "Select is a select field that allows you to select from a list of options.",
   } as const,
   {
     name: "age",
@@ -54,17 +52,34 @@ const formFields = [
     type: FieldType.Text,
     default: "",
     schema: z.preprocess(emptyToUndefined, z.string()),
-    description: `
-      Okay, so one of the worse things about using zod with react-hook-form is that it expects the default values to match the type of the schema. 
-      Usually this is fine and you can just use a preprocessor to make empty strings default to undefined. 
-      However, in the case of a number, it gets a bit tricky. 
-      If you do not provide a default value as a number, typescript will complain. 
-      Look at the age field! it looks ridiculous with that zero, also the number input field is just a bit weird for me. 
-      So, what I usually like to do is use a regular text input field with an emptyToUndefined preprocessor then a string schema with an empty string as the default value. 
-      Then I use the superRefine Method on the schema  to parse the string to a float or an int then check if NaN and complain if it is indeed NaN.
-      If the value is a valid number, I return the data with the parsed number. 
-      Try it out and check the console for the result, but first test an invalid number to see if it complains.
-      Trust me, once you try it you will never use number fields ever again....`,
+    description: (
+      <p>
+        Okay, so one of the worse things about using zod with react-hook-form is
+        that it expects the default values to match the type of the schema.
+        Usually this is fine and you can just use a preprocessor to make empty
+        strings default to undefined. However, in the case of a number, it gets
+        a bit tricky. If you do not provide a default value as a number,
+        typescript will complain.
+        <br />
+        <strong>
+          Look at the age field! it looks ridiculous with that zero
+        </strong>
+        , also the number input field is just a bit weird for me.
+        <br />
+        So, what I usually like to do is use a regular text input field with an
+        emptyToUndefined preprocessor then a string schema with an empty string
+        as the default value. Then I use the superRefine Method on the schema to
+        parse the string to a float or an int then check if NaN and complain if
+        it is indeed NaN. If the value is a valid number, I return the data with
+        the parsed number.
+        <br />
+        Try it out and check the console for the result, but first test an
+        invalid number to see if it complains.
+        <br />
+        Trust me, once you try it you will never use number fields ever
+        again....
+      </p>
+    ),
   } as const,
   {
     name: "country",
@@ -77,10 +92,12 @@ const formFields = [
     searchMessage: "Search Countries",
     notFoundMessage: "No Country Found",
     schema: z.string(),
-    description: `
-      Combo Select is a select field that allows you to search for options. 
-      It is a great way to add a dropdown with a search bar to your form.
-      `,
+    description: (
+      <p>
+        Combo Select is a select field that allows you to search for options. It
+        is a great way to add a dropdown with a search bar to your form.
+      </p>
+    ),
   } as const,
   {
     name: "isStudent",

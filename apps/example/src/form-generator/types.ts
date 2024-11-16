@@ -1,4 +1,5 @@
 import type { z } from "zod";
+import type { ReactNode } from "react";
 
 export const enum FieldType {
   Text = "text",
@@ -16,7 +17,7 @@ type GenericFieldType = {
   schema: z.ZodTypeAny;
   hidden?: boolean;
   className?: string;
-  description?: string;
+  description?: string | ReactNode;
 };
 
 export type TextFieldType = GenericFieldType & {

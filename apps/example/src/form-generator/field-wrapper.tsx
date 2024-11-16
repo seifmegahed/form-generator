@@ -17,7 +17,7 @@ function FieldWrapper({
   label: string;
   children: ReactNode;
   className?: string;
-  description?: string;
+  description?: string | ReactNode;
 }) {
   return (
     <FormItem className={cn("py-2", className)}>
