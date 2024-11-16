@@ -16,6 +16,7 @@ This cli tool is used to generate the form generator component files in your pro
 - Text
 - Number
 - Select
+- Combo Select
 - Checkbox
 - Date Picker
 
@@ -36,6 +37,12 @@ The way you use the component is by passing an array of objects that describe th
 
 The field object is of type `FieldDataType` and looks like this:
 ```ts
+/**
+ * This is a simple representation of the field data type.
+ * The actual implementation has more field specific properties.
+ * 
+ * You can find the implementation in the `/form-generator/types.ts` file.
+ */
 type FieldDataType = {
   name: string;
   label: string;
@@ -47,6 +54,7 @@ type FieldDataType = {
     | readonly { value: string | number; label: string }[];
   hidden?: boolean;
   className?: string;
+  description?: string | ReactNode;
 };
 ```
 
@@ -103,6 +111,9 @@ Add the following components depending on the fields you want to use.
   - input
 - Select
   - select
+- Combo Select
+  - popover
+  - command
 - Textarea
   - textarea
 - Checkbox
@@ -138,6 +149,7 @@ const formData = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "John Doe",
+    description: "Enter your name",
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
   {
@@ -146,6 +158,7 @@ const formData = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "john@doe.com",
+    description: "Enter your email",
     schema: z.preprocess(emptyToUndefined, z.string().email()),
   },
   {
@@ -154,6 +167,7 @@ const formData = [
     type: FieldType.DatePicker,
     className: "md:col-span-2",
     default: new Date(),
+    description: <p>Select your date of admission</p>,
     schema: z.date(),
   },
   {

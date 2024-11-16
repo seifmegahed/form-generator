@@ -14,6 +14,7 @@ An easy way to build type-safe forms with dynamic fields and validations. This c
 - Text
 - Number
 - Select
+- Combo Select
 - Checkbox
 - Date Picker
 
@@ -34,6 +35,12 @@ The way you use the component is by passing an array of objects that describe th
 
 The field object is of type `FieldDataType` and looks like this:
 ```ts
+/**
+ * This is a simple representation of the field data type.
+ * The actual implementation has more field specific properties.
+ * 
+ * You can find the implementation in the `src/apps/example/src/form-generator/types.ts` file.
+ */
 type FieldDataType = {
   name: string;
   label: string;
@@ -45,6 +52,7 @@ type FieldDataType = {
     | readonly { value: string | number; label: string }[];
   hidden?: boolean;
   className?: string;
+  description?: string | ReactNode;
 };
 ```
 
@@ -117,6 +125,9 @@ Add the following components depending on the fields you want to use.
   - input
 - Select
   - select
+- Combo Select
+  - popover
+  - command
 - Textarea
   - textarea
 - Checkbox
@@ -154,6 +165,7 @@ const formData: FieldDataType[] = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "John Doe",
+    description: "Enter your name",
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
   {
@@ -162,6 +174,7 @@ const formData: FieldDataType[] = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "john@doe.com",
+    description: "Enter your email",
     schema: z.preprocess(emptyToUndefined, z.string().email()),
   },
   {
@@ -170,6 +183,7 @@ const formData: FieldDataType[] = [
     type: FieldType.DatePicker,
     className: "md:col-span-2",
     default: new Date(),
+    description: <p>Select your date of admission</p>, 
     schema: z.date(),
   },
   {
