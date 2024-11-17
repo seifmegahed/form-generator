@@ -65,12 +65,13 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           className={fieldData.className}
           label={fieldData.label}
           description={fieldData.description}
+          htmlFor={fieldData.name}
         >
           <Select
             onValueChange={field.onChange}
             value={(field.value as string) ?? ""}
           >
-            <SelectTrigger>
+            <SelectTrigger id={fieldData.name}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -96,8 +97,13 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           className={fieldData.className}
           label={fieldData.label}
           description={fieldData.description}
+          htmlFor={fieldData.name}
         >
-          <Input {...field} value={(field.value as string) ?? ""} />
+          <Input
+            id={fieldData.name}
+            {...field}
+            value={(field.value as string) ?? ""}
+          />
         </FieldWrapper>
       );
     case FieldType.Number:
@@ -106,8 +112,9 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           className={fieldData.className}
           label={fieldData.label}
           description={fieldData.description}
+          htmlFor={fieldData.name}
         >
-          <Input {...field} type="number" />
+          <Input {...field} type="number" id={fieldData.name} />
         </FieldWrapper>
       );
     //split//textarea
@@ -117,12 +124,14 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           className={fieldData.className}
           label={fieldData.label}
           description={fieldData.description}
+          htmlFor={fieldData.name}
         >
           <Textarea
             {...field}
             rows={6}
             className="resize-none"
             maxLength={512}
+            id={fieldData.name}
           />
         </FieldWrapper>
       );
@@ -136,10 +145,14 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           )}
         >
           <div className="flex items-center justify-between">
-            <span className="text-lg text-muted-foreground">
+            <label
+              htmlFor={fieldData.name}
+              className="text-lg text-muted-foreground"
+            >
               {fieldData.label}
-            </span>
+            </label>
             <Checkbox
+              id={fieldData.name}
               checked={field.value as boolean}
               onCheckedChange={field.onChange}
               className="size-5 border-2"
@@ -161,10 +174,14 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           )}
         >
           <div className="flex items-center justify-between">
-            <span className="text-lg text-muted-foreground">
+            <label
+              htmlFor={fieldData.name}
+              className="text-lg text-muted-foreground"
+            >
               {fieldData.label}
-            </span>
+            </label>
             <DatePicker
+              id={fieldData.name}
               date={field.value as Date}
               onChange={field.onChange}
               allowFuture={fieldData.allowFuture}
@@ -183,8 +200,10 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           className={fieldData.className}
           label={fieldData.label}
           description={fieldData.description}
+          htmlFor={fieldData.name}
         >
           <ComboSelect
+            id={fieldData.name}
             value={field.value as string}
             onChange={field.onChange}
             options={fieldData.options}

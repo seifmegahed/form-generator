@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 
 function ComboSelect({
+  id,
   value,
   onChange = () => {
     return;
@@ -30,6 +31,7 @@ function ComboSelect({
   searchMessage = "Search",
   notFoundMessage = "Not Found",
 }: {
+  id?: string;
   value?: string | number;
   onChange?: (value: string | number) => void;
   className?: string;
@@ -51,6 +53,7 @@ function ComboSelect({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          id={id}
           variant="outline"
           role="combobox"
           aria-expanded={open}

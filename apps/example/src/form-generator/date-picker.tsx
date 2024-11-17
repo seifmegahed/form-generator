@@ -11,10 +11,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 function DatePicker({
+  id,
   date,
   allowFuture,
   onChange,
 }: {
+  id?: string;
   date?: Date;
   allowFuture?: boolean;
   onChange: (date?: Date) => void;
@@ -28,6 +30,7 @@ function DatePicker({
     <Popover>
       <PopoverTrigger asChild>
         <Button
+          id={id}
           variant={"outline"}
           className={cn(
             "w-[240px] pl-3 text-left font-normal",
