@@ -49,6 +49,7 @@ class FormGenerator<T extends readonly FieldDataType[]> {
         {this.formData.map((fieldData) =>
           fieldData.hidden ? null : (
             <FormField
+              aria-label={fieldData.label}
               key={fieldData.name}
               control={form.control}
               name={fieldData.name as FormSchema<T>[keyof FormSchema<T>]}

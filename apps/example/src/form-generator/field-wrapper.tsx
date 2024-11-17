@@ -22,13 +22,15 @@ function FieldWrapper({
   description?: string | ReactNode;
 }) {
   return (
-    <FormItem className={cn("py-2", className)}>
+    <FormItem className={cn("py-2", className)} aria-label={label + " field"}>
       <FormLabel htmlFor={htmlFor} className="text-md">
         {label}
       </FormLabel>
       {children}
       <FormMessage />
-      <FormDescription className="text-xs">{description}</FormDescription>
+      {description && (
+        <FormDescription className="text-xs">{description}</FormDescription>
+      )}
     </FormItem>
   );
 }

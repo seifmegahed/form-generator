@@ -51,12 +51,11 @@ function FormTester({ formFields }: { formFields: FieldDataType[] }) {
     <form
       className="w-full max-w-lg bg-primary-foreground p-5 shadow-md sm:rounded-lg"
       onSubmit={form.handleSubmit(onSubmit)}
+      aria-label="Form Generator Tester"
     >
-      <div className="py-3 text-3xl font-bold">
-        <p className="line-clamp-1 text-ellipsis text-primary">
-          Form Generator Tester
-        </p>
-      </div>
+      <h3 className="line-clamp-1 text-ellipsis text-3xl font-bold text-primary">
+        Form Generator Tester
+      </h3>
       <div className="grid gap-x-3 md:grid-cols-4">{formData.fields(form)}</div>
       <div className="flex justify-end py-5">
         <Button

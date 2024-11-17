@@ -135,7 +135,11 @@ export default function HomePage() {
       <Dialog
         open={open}
         setOpen={setOpen}
-        button={<Button className="w-60">Add Field</Button>}
+        button={
+          <Button className="w-60" aria-expanded={open}>
+            Add Field
+          </Button>
+        }
       >
         <AddFieldForm
           onSubmit={(field) => {

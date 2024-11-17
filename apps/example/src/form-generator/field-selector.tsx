@@ -143,6 +143,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             "flex h-full flex-col justify-center gap-2",
             fieldData.className,
           )}
+          aria-label={fieldData.label + " field"}
         >
           <div className="flex items-center justify-between">
             <label
@@ -172,6 +173,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             "flex h-full flex-col justify-center gap-2",
             fieldData.className,
           )}
+          aria-label={fieldData.label + " field"}
         >
           <div className="flex items-center justify-between">
             <label
