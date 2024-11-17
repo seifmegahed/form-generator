@@ -18,6 +18,7 @@ type GenericFieldType = {
   hidden?: boolean;
   className?: string;
   description?: string | ReactNode;
+  required?: boolean;
 };
 
 export type TextFieldType = GenericFieldType & {

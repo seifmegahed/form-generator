@@ -18,6 +18,7 @@ const formFields = [
     type: FieldType.Text,
     default: "",
     schema: z.preprocess(emptyToUndefined, z.string()),
+    required: true,
   } as const,
   {
     name: "lastName",
@@ -26,6 +27,7 @@ const formFields = [
     type: FieldType.Text,
     default: "",
     schema: z.preprocess(emptyToUndefined, z.string()),
+    required: true,
   } as const,
   {
     name: "major",
@@ -35,6 +37,7 @@ const formFields = [
     default: undefined,
     options: ["Computer Science", "Mathematics", "Physics"],
     schema: z.string(),
+    required: true,
     description:
       "Select is a select field that allows you to select from a list of options.",
   } as const,
@@ -44,6 +47,7 @@ const formFields = [
     type: FieldType.Number,
     default: 0,
     schema: z.preprocess(emptyToUndefined, z.number()),
+    required: true,
   } as const,
   {
     name: "registrationNumber",
@@ -52,6 +56,7 @@ const formFields = [
     type: FieldType.Text,
     default: "",
     schema: z.preprocess(emptyToUndefined, z.string()),
+    required: true,
     description: (
       <p>
         Okay, so one of the worse things about using zod with react-hook-form is
@@ -92,6 +97,7 @@ const formFields = [
     searchMessage: "Search Countries",
     notFoundMessage: "No Country Found",
     schema: z.string(),
+    required: true,
     description: (
       <p>
         Combo Select is a select field that allows you to search for options. It
@@ -106,6 +112,7 @@ const formFields = [
     type: FieldType.Checkbox,
     default: false,
     schema: z.boolean(),
+    required: true,
   } as const,
   {
     name: "date-of-admission",
@@ -114,6 +121,7 @@ const formFields = [
     type: FieldType.DatePicker,
     default: new Date(),
     schema: z.date(),
+    required: true,
   } as const,
   {
     name: "notes",
@@ -122,6 +130,7 @@ const formFields = [
     type: FieldType.Textarea,
     default: "",
     schema: z.string(),
+    required: true,
   } as const,
 ];
 

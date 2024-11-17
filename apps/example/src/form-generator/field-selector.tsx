@@ -70,6 +70,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           <Select
             onValueChange={field.onChange}
             value={(field.value as string) ?? ""}
+            required={fieldData.required}
           >
             <SelectTrigger id={fieldData.name}>
               <SelectValue />
@@ -99,11 +100,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           description={fieldData.description}
           htmlFor={fieldData.name}
         >
-          <Input
-            id={fieldData.name}
-            {...field}
-            value={(field.value as string) ?? ""}
-          />
+          <Input id={fieldData.name} {...field} />
         </FieldWrapper>
       );
     case FieldType.Number:
@@ -156,13 +153,16 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
               id={fieldData.name}
               checked={field.value as boolean}
               onCheckedChange={field.onChange}
+              required={fieldData.required}
               className="size-5 border-2"
             />
           </div>
           <FormMessage />
-          <FormDescription className="text-xs">
-            {fieldData.description}
-          </FormDescription>
+          {fieldData.description && (
+            <FormDescription className="text-xs">
+              {fieldData.description}
+            </FormDescription>
+          )}
         </FormItem>
       );
     //split//date-picker
@@ -183,6 +183,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
               {fieldData.label}
             </label>
             <DatePicker
+              required={fieldData.required}
               id={fieldData.name}
               date={field.value as Date}
               onChange={field.onChange}
@@ -190,9 +191,11 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             />
           </div>
           <FormMessage />
-          <FormDescription className="text-xs">
-            {fieldData.description}
-          </FormDescription>
+          {fieldData.description && (
+            <FormDescription className="text-xs">
+              {fieldData.description}
+            </FormDescription>
+          )}
         </FormItem>
       );
     //split//combo-select
@@ -205,6 +208,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           htmlFor={fieldData.name}
         >
           <ComboSelect
+            required={fieldData.required}
             id={fieldData.name}
             value={field.value as string}
             onChange={field.onChange}
