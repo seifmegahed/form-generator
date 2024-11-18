@@ -166,6 +166,7 @@ const formData: FieldDataType[] = [
     className: "md:col-span-2",
     default: "John Doe",
     description: "Enter your name",
+    required: true,
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
   {
@@ -175,6 +176,7 @@ const formData: FieldDataType[] = [
     className: "md:col-span-2",
     default: "john@doe.com",
     description: "Enter your email",
+    required: true,
     schema: z.preprocess(emptyToUndefined, z.string().email()),
   },
   {
@@ -184,6 +186,7 @@ const formData: FieldDataType[] = [
     className: "md:col-span-2",
     default: new Date(),
     description: <p>Select your date of admission</p>, 
+    required: true,
     schema: z.date(),
   },
   {
@@ -192,6 +195,7 @@ const formData: FieldDataType[] = [
     type: FieldType.Number,
     className: "md:col-span-2",
     default: 18,
+    required: true,
     schema: z.preprocess(
       emptyToUndefined, 
       z.preprocess(
@@ -236,6 +240,87 @@ function FormExample() {
     </form>
   )
 }
+```
+
+## The "Optional Field" and Default Values Problem
+
+Normally, when creating a form, some fields are required and some are optional. However in the case of the form-generator, using the zod schema `.optional()` method will result in type errors. Additionally, React does not like it when you pass an undefined value to a controlled field.
+
+To solve this problem, you can use the `emptyToNull` preprocessor method to convert an empty string to null. This will allow you to use the `.nullable()` method on the zod schema to make the field optional. 
+
+```tsx
+import { z } from 'zod'
+import { emptyToNull } from '@/components/form-generator/utils'
+
+const formData = [
+  {
+    //...
+    defaultValue: "",
+    schema: z.preprocess(emptyToNull, z.string().nullable()),
+  },
+]
+```
+
+This will behave as you would expect an optional field to behave. However, the result in the case of an empty string will be null instead of undefined.
+
+In the case of a required field, you can use the `emptyToUndefined` preprocessor method to convert an empty string to undefined.
+
+```tsx
+import { z } from 'zod'
+import { emptyToUndefined } from '@/components/form-generator/utils'
+
+const formData = [
+  {
+    //...
+    defaultValue: "",
+    schema: z.preprocess(emptyToUndefined, z.string()),
+  },
+]
+```
+
+This will behave as you would expect a required field to behave.
+
+## Number field tip
+
+As I mentioned above, React expects a defined default value for a controlled field. And `react-hook-form` expects the default value to match the type of the schema. So in the case of a number field, you need to provide a default value of type number.
+
+In my opinion this is a very ugly design. I prefer to use the `TextField` component and do a bit post-processing using zod's `superRefine` method to parse the string to an int or a float.
+
+Here's an example of how you can use the `superRefine` method to parse the string to a number and check if it is a valid number.
+
+```tsx
+import { z } from 'zod'
+
+const formData = [
+  {
+    //...
+    name: "age",
+    type: FieldType.Text,
+    defaultValue: "",
+    schema: z.preprocess(emptyToUndefined, z.string()),
+  }
+] as const;
+
+const generator = new FormGenerator(formData)
+
+const schema = z.object(generator.schema).superRefine((data, ctx) => {
+  // Parse the string to an int or a float
+  const age = parseInt(data.age);
+  // Check if the parsed number is a valid number
+  if (isNaN(registrationNumber)) {
+    // Register a custom error message
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Age must be a number",
+      path: ["age"],
+    });
+    // Do not allow the form to be submitted
+    return false;
+  }
+  // Swap the parsed number with the original number and return the data
+  data.age = age;
+  return data;
+})
 ```
 
 ## Contributing
