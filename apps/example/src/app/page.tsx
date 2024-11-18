@@ -9,8 +9,9 @@ import { Button } from "@/components/ui/button";
 import Dialog from "@/components/dialog";
 import AddFieldForm from "@/components/add-field-form";
 import { countries } from "@/lib/countries";
+import { emptyToNull } from "@/form-generator/utils";
 
-const formFields = [
+const formFields: FieldDataType[] = [
   {
     name: "firstName",
     label: "First Name",
@@ -129,8 +130,8 @@ const formFields = [
     className: "md:col-span-4",
     type: FieldType.Textarea,
     default: "",
-    schema: z.string(),
-    required: true,
+    schema: z.preprocess(emptyToNull, z.string().nullable()),
+    required: false,
   } as const,
 ];
 

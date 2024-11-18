@@ -4,6 +4,7 @@ import { emptyToUndefined, FieldType, FormGenerator } from "@/form-generator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
+import { emptyToNull } from "@/form-generator/utils";
 
 const schemas = (required: boolean, type: FieldType) => {
   console.log(required, type);
@@ -31,7 +32,10 @@ const schemas = (required: boolean, type: FieldType) => {
   }
 };
 
-const getDefaultValue = (type: FieldType, defaultValue: string | number) => {
+const getDefaultValue = (
+  type: FieldType,
+  defaultValue: string | number | null,
+) => {
   switch (type) {
     case FieldType.Text:
       return defaultValue ? (defaultValue as string) : "";
@@ -57,6 +61,7 @@ const formFields = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "",
+    required: true,
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
   {
@@ -65,6 +70,7 @@ const formFields = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "",
+    required: true,
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
   {
@@ -73,6 +79,7 @@ const formFields = [
     type: FieldType.Checkbox,
     className: "md:col-span-2",
     default: false,
+    required: true,
     schema: z.boolean(),
   },
   {
@@ -81,6 +88,7 @@ const formFields = [
     type: FieldType.Number,
     className: "md:col-span-2",
     default: 2,
+    required: true,
     schema: z.preprocess(
       emptyToUndefined,
       z.preprocess(
@@ -102,7 +110,8 @@ const formFields = [
       { label: "Textarea", value: FieldType.Textarea },
       { label: "Checkbox", value: FieldType.Checkbox },
       { label: "Date Picker", value: FieldType.DatePicker },
-    ],
+    ] as const,
+    required: true,
     schema: z.string(),
   },
   {
@@ -111,7 +120,8 @@ const formFields = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "",
-    schema: z.string(),
+    schema: z.preprocess(emptyToNull, z.string().nullable()),
+    required: false,
   },
   {
     name: "description",
@@ -119,15 +129,17 @@ const formFields = [
     type: FieldType.Textarea,
     className: "md:col-span-4",
     default: "",
+    required: false,
     schema: z.preprocess(emptyToUndefined, z.string()),
   },
   {
     name: "options",
     label: "Options",
     type: FieldType.Textarea,
+    required: false,
     className: "md:col-span-4",
     default: "Options delimited by comma",
-    schema: z.preprocess(emptyToUndefined, z.string()),
+    schema: z.preprocess(emptyToNull, z.string().nullable()),
   },
 ] as const;
 
@@ -136,7 +148,7 @@ function AddFieldForm({
 }: {
   onSubmit: (field: FieldDataType) => void;
 }) {
-  const formData = new FormGenerator<typeof formFields>(formFields);
+  const formData = new FormGenerator(formFields);
 
   const schema = z.object(formData.schema).refine((data) => {
     if ((data.type as FieldType) === FieldType.Select && data.options) {
@@ -162,8 +174,10 @@ function AddFieldForm({
             type: FieldType.Select,
             default: getDefaultValue(FieldType.Select, data.default),
             schema: schemas(data.required, FieldType.Select),
-            options: data.options.split(",").map((option) => option.trim()),
+            options:
+              data?.options?.split(",").map((option) => option.trim()) ?? [],
             description: data.description,
+            required: data.required,
           } as FieldDataType)
         : ({
             name: data.name,
@@ -173,6 +187,7 @@ function AddFieldForm({
             default: getDefaultValue(data.type as FieldType, data.default),
             schema: schemas(data.required, data.type as FieldType),
             description: data.description,
+            required: data.required,
           } as FieldDataType);
     onSubmit(field);
   };

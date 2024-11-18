@@ -44,19 +44,18 @@ import { cn } from "@/lib/utils";
 import FieldWrapper from "./field-wrapper";
 import { FieldType, type FieldDataType } from "./types";
 
-type FieldSchema<T extends FieldDataType> = {
-  [K in T["name"]]: z.infer<Extract<T, { name: K }>["schema"]>;
-};
+type FieldSchema<T extends FieldDataType> =
+  T["schema"] extends z.ZodType<unknown> ? z.infer<T["schema"]> : never;
 
-interface FieldSelectorProps {
-  fieldData: FieldDataType;
-  field: ControllerRenderProps<
-    FieldSchema<FieldDataType>,
-    Path<FieldSchema<FieldDataType>>
-  >;
+interface FieldSelectorProps<T extends FieldDataType> {
+  fieldData: T;
+  field: ControllerRenderProps<FieldSchema<T>, Path<FieldSchema<T>>>;
 }
 
-function FieldSelector({ fieldData, field }: FieldSelectorProps) {
+function FieldSelector<T extends FieldDataType>({
+  fieldData,
+  field,
+}: FieldSelectorProps<T>) {
   switch (fieldData.type) {
     //split//select
     case FieldType.Select:
@@ -71,6 +70,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             onValueChange={field.onChange}
             value={(field.value as string) ?? ""}
             required={fieldData.required}
+            data-testid={fieldData.testId}
           >
             <SelectTrigger id={fieldData.name}>
               <SelectValue />
@@ -100,7 +100,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           description={fieldData.description}
           htmlFor={fieldData.name}
         >
-          <Input id={fieldData.name} {...field} />
+          <Input id={fieldData.name} {...field} data-testid={fieldData.testId} />
         </FieldWrapper>
       );
     case FieldType.Number:
@@ -111,7 +111,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           description={fieldData.description}
           htmlFor={fieldData.name}
         >
-          <Input {...field} type="number" id={fieldData.name} />
+          <Input {...field} type="number" id={fieldData.name} data-testid={fieldData.testId} />
         </FieldWrapper>
       );
     //split//textarea
@@ -129,6 +129,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
             className="resize-none"
             maxLength={512}
             id={fieldData.name}
+            data-testid={fieldData.testId}
           />
         </FieldWrapper>
       );
@@ -155,6 +156,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
               onCheckedChange={field.onChange}
               required={fieldData.required}
               className="size-5 border-2"
+              data-testid={fieldData.testId}
             />
           </div>
           <FormMessage />
@@ -188,6 +190,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
               date={field.value as Date}
               onChange={field.onChange}
               allowFuture={fieldData.allowFuture}
+              data-testid={fieldData.testId}
             />
           </div>
           <FormMessage />
@@ -210,6 +213,7 @@ function FieldSelector({ fieldData, field }: FieldSelectorProps) {
           <ComboSelect
             required={fieldData.required}
             id={fieldData.name}
+            data-testid={fieldData.testId}
             value={field.value as string}
             onChange={field.onChange}
             options={fieldData.options}

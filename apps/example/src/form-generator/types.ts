@@ -17,23 +17,24 @@ type GenericFieldType = {
   schema: z.ZodTypeAny;
   hidden?: boolean;
   className?: string;
-  description?: string | ReactNode;
-  required?: boolean;
+  description?: string | ReactNode | null;
+  required: boolean;
+  testId?: string;
 };
 
 export type TextFieldType = GenericFieldType & {
   type: FieldType.Text;
-  default: string;
+  default?: string;
 };
 
 export type NumberFieldType = GenericFieldType & {
   type: FieldType.Number;
-  default: number;
+  default?: number;
 };
 
 export type SelectFieldType = GenericFieldType & {
   type: FieldType.Select;
-  default: string | number | undefined;
+  default?: string | number;
   options:
     | readonly string[]
     | readonly { value: string | number; label: string }[];
@@ -41,24 +42,24 @@ export type SelectFieldType = GenericFieldType & {
 
 export type TextareaFieldType = GenericFieldType & {
   type: FieldType.Textarea;
-  default: string;
+  default?: string;
 };
 
 export type CheckboxFieldType = GenericFieldType & {
   type: FieldType.Checkbox;
-  default: boolean;
+  default?: boolean;
 };
 
 export type DatePickerFieldType = GenericFieldType & {
   type: FieldType.DatePicker;
-  default: Date;
+  default?: Date;
   allowFuture?: boolean;
 };
 
 export type ComboSelect = GenericFieldType & {
   type: FieldType.ComboSelect;
-  default: string | undefined;
-  options: { value: string; label: string }[] | string[];
+  default?: string;
+  options: readonly { value: string; label: string }[] | readonly string[];
   searchMessage?: string;
   notFoundMessage?: string;
   selectMessage?: string;

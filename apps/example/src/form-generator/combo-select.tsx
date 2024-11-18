@@ -36,7 +36,7 @@ function ComboSelect({
   value?: string | number;
   onChange?: (value: string | number) => void;
   className?: string;
-  options: { label: string; value: string }[] | string[];
+  options: readonly { label: string; value: string }[] | readonly string[];
   selectMessage?: string;
   searchMessage?: string;
   notFoundMessage?: string;

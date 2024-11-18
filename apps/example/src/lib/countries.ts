@@ -195,4 +195,4 @@ export const countries = [
   "Yemen",
   "Zambia",
   "Zimbabwe"
-];
+] as const;
