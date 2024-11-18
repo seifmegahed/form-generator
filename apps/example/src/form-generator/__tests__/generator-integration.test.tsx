@@ -27,6 +27,7 @@ const formTestFields: Record<string, readonly FieldDataType[]> = {
       className: "md:col-span-2",
       type: FieldType.Text,
       default: "",
+      required: true,
       schema: z.preprocess(emptyToUndefined, z.string()),
     },
   ] as const,
@@ -37,6 +38,7 @@ const formTestFields: Record<string, readonly FieldDataType[]> = {
       className: "md:col-span-2",
       type: FieldType.Number,
       default: 0,
+      required: true,
       schema: z.preprocess(
         emptyToUndefined,
         z.preprocess((val) => Number(val), z.number()),
@@ -51,6 +53,7 @@ const formTestFields: Record<string, readonly FieldDataType[]> = {
       type: FieldType.Select,
       default: undefined,
       schema: z.string(),
+      required: true,
       options: [
         { value: "option1", label: "Option 1" },
         { value: "option2", label: "Option 2" },
@@ -64,7 +67,9 @@ const formTestFields: Record<string, readonly FieldDataType[]> = {
       label: "Test Field",
       type: FieldType.Checkbox,
       default: false,
+      required: true,
       schema: z.boolean(),
+      testId: "checkbox-field",
     },
   ] as const,
 };
@@ -287,12 +292,14 @@ describe("Form Generator Integration Test", () => {
     if (!submitButton) throw new Error("submit button not found");
     const formElement = screen.getByTestId("form");
     if (!formElement) throw new Error("form not found");
-    const checkboxFieldButton = formElement.querySelector("button");
+    const checkboxFieldButton = screen.getByTestId("checkbox-field");
     if (!checkboxFieldButton) throw new Error("checkbox field not found");
 
     // Test valid true value
     await act(async () => {
       fireEvent.click(checkboxFieldButton);
+    });
+    await act(async () => {
       fireEvent.click(submitButton);
     });
     expect(onSubmitStub).toHaveBeenCalledWith({ testField: true });

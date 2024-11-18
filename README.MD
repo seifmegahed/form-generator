@@ -47,6 +47,7 @@ type FieldDataType = {
   type: FieldType;
   default: defaultValueTypes;
   schema: z.ZodType;
+  required: boolean;
   options?:
     | readonly string[]
     | readonly { value: string | number; label: string }[];
