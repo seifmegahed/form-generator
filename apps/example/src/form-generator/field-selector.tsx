@@ -100,7 +100,11 @@ function FieldSelector<T extends FieldDataType>({
           description={fieldData.description}
           htmlFor={fieldData.name}
         >
-          <Input id={fieldData.name} {...field} data-testid={fieldData.testId} />
+          <Input
+            id={fieldData.name}
+            {...field}
+            data-testid={fieldData.testId}
+          />
         </FieldWrapper>
       );
     case FieldType.Number:
@@ -111,7 +115,12 @@ function FieldSelector<T extends FieldDataType>({
           description={fieldData.description}
           htmlFor={fieldData.name}
         >
-          <Input {...field} type="number" id={fieldData.name} data-testid={fieldData.testId} />
+          <Input
+            {...field}
+            type="number"
+            id={fieldData.name}
+            data-testid={fieldData.testId}
+          />
         </FieldWrapper>
       );
     //split//textarea
@@ -125,7 +134,7 @@ function FieldSelector<T extends FieldDataType>({
         >
           <Textarea
             {...field}
-            rows={6}
+            rows={fieldData.rows ?? 4}
             className="resize-none"
             maxLength={512}
             id={fieldData.name}
@@ -138,7 +147,7 @@ function FieldSelector<T extends FieldDataType>({
       return (
         <FormItem
           className={cn(
-            "flex h-full flex-col justify-center gap-2",
+            "flex h-full flex-col justify-center gap-2 py-6",
             fieldData.className,
           )}
           aria-label={fieldData.label + " field"}
@@ -154,7 +163,6 @@ function FieldSelector<T extends FieldDataType>({
               id={fieldData.name}
               checked={field.value as boolean}
               onCheckedChange={field.onChange}
-              required={fieldData.required}
               className="size-5 border-2"
               data-testid={fieldData.testId}
             />

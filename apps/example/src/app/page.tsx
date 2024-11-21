@@ -113,7 +113,7 @@ const formFields: FieldDataType[] = [
     type: FieldType.Checkbox,
     default: false,
     schema: z.boolean(),
-    required: true,
+    required: false,
   } as const,
   {
     name: "date-of-admission",

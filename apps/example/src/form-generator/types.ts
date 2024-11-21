@@ -42,6 +42,7 @@ export type SelectFieldType = GenericFieldType & {
 
 export type TextareaFieldType = GenericFieldType & {
   type: FieldType.Textarea;
+  rows?: number;
   default?: string;
 };
 
