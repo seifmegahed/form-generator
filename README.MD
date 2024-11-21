@@ -294,11 +294,13 @@ import { z } from 'zod'
 
 const formData = [
   {
-    //...
     name: "age",
+    label: "Age",
     type: FieldType.Text,
     defaultValue: "",
-    schema: z.preprocess(emptyToUndefined, z.string()),
+    required: true,
+    // Use the union schema to have the property type accept either a string or a number
+    schema: z.preprocess(emptyToUndefined, z.union([z.string(), z.number()])),
   }
 ] as const;
 
@@ -309,7 +311,12 @@ const schema = z.object(generator.schema).superRefine((data, ctx) => {
   const age = parseInt(data.age);
   // Check if the parsed number is a valid number
   if (isNaN(registrationNumber)) {
-    // Register a custom error message
+    /**
+     * Register a custom error message
+     * This will be shown in the form validation error message 
+     * The error will be displayed below the field you specify in the path array 
+     * path: ["age"]
+     */
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "Age must be a number",
