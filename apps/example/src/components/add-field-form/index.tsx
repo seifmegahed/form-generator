@@ -12,23 +12,23 @@ const schemas = (required: boolean, type: FieldType) => {
     case FieldType.Text:
       return required
         ? z.preprocess(emptyToUndefined, z.string())
-        : z.preprocess(emptyToUndefined, z.string().optional());
+        : z.preprocess(emptyToNull, z.string().nullable());
     case FieldType.Number:
       return required
         ? z.preprocess(emptyToUndefined, z.number())
-        : z.preprocess(emptyToUndefined, z.number().optional());
+        : z.preprocess(emptyToNull, z.number().nullable());
     case FieldType.Select:
-      return required ? z.string() : z.string().optional();
+      return required ? z.string() : z.string().nullable();
     case FieldType.Textarea:
       return required
         ? z.preprocess(emptyToUndefined, z.string())
-        : z.preprocess(emptyToUndefined, z.string().optional());
+        : z.preprocess(emptyToNull, z.string().nullable());
     case FieldType.Checkbox:
       return z.boolean();
     case FieldType.DatePicker:
-      return required ? z.date() : z.date().optional();
+      return required ? z.date() : z.date().nullable();
     default:
-      return z.preprocess(emptyToUndefined, z.string().optional());
+      return z.preprocess(emptyToNull, z.string().nullable());
   }
 };
 
@@ -59,6 +59,8 @@ const formFields = [
     name: "name",
     label: "Name",
     type: FieldType.Text,
+    description:
+      "Name of the field in the form, must be unique. This name will be the key of the field in the form data",
     className: "md:col-span-2",
     default: "",
     required: true,
@@ -68,6 +70,7 @@ const formFields = [
     name: "Label",
     label: "Label",
     type: FieldType.Text,
+    description: "Label of the field",
     className: "md:col-span-2",
     default: "",
     required: true,
@@ -89,11 +92,15 @@ const formFields = [
     className: "md:col-span-2",
     default: 2,
     required: true,
+    description: "Number of columns the field should span",
     schema: z.preprocess(
       emptyToUndefined,
       z.preprocess(
         (val) => Number(val),
-        z.number({ invalid_type_error: "Span must be a number" }),
+        z
+          .number({ invalid_type_error: "Span must be a number" })
+          .min(1, { message: "Span must be between 1 and 4" })
+          .max(4, { message: "Span must be between 1 and 4" }),
       ),
     ),
   },
@@ -113,6 +120,7 @@ const formFields = [
     ] as const,
     required: true,
     schema: z.string(),
+    description: "Choose the type of the field",
   },
   {
     name: "default",
@@ -120,6 +128,8 @@ const formFields = [
     type: FieldType.Text,
     className: "md:col-span-2",
     default: "",
+    description:
+      "Default value of the field. Leave empty if you don't want to set a default value.",
     schema: z.preprocess(emptyToNull, z.string().nullable()),
     required: false,
   },
@@ -128,9 +138,11 @@ const formFields = [
     label: "Description",
     type: FieldType.Textarea,
     className: "md:col-span-4",
+    description:
+      "Description of the field. This will be shown below the field like this text.",
     default: "",
     required: false,
-    schema: z.preprocess(emptyToUndefined, z.string()),
+    schema: z.preprocess(emptyToNull, z.string().nullable()),
   },
   {
     name: "options",
@@ -138,8 +150,9 @@ const formFields = [
     type: FieldType.Textarea,
     required: false,
     className: "md:col-span-4",
-    default: "Options delimited by comma",
+    default: "",
     schema: z.preprocess(emptyToNull, z.string().nullable()),
+    description: "Options delimited by comma",
   },
 ] as const;
 
@@ -150,11 +163,28 @@ function AddFieldForm({
 }) {
   const formData = new FormGenerator(formFields);
 
-  const schema = z.object(formData.schema).refine((data) => {
-    if ((data.type as FieldType) === FieldType.Select && data.options) {
-      return data.options.length > 0;
+  const schema = z.object(formData.schema).superRefine((data, ctx) => {
+    const type = data.type as FieldType;
+    if (type === FieldType.Select && !data.options) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Select field must have options",
+        path: ["options"],
+      });
+      return false;
     }
-    return true;
+    if (
+      type === FieldType.Number &&
+      data.default &&
+      isNaN(parseFloat(data.default))
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Default value must be a number",
+        path: ["default"],
+      });
+      return false;
+    }
   });
 
   type schemaDataType = z.infer<typeof schema>;
@@ -197,6 +227,7 @@ function AddFieldForm({
       className="flex w-full flex-col gap-5 px-5 py-8"
       onSubmit={form.handleSubmit(handleSubmit)}
     >
+      <h1 className="text-2xl font-bold">Add Field to the Form</h1>
       <div className="grid w-full gap-x-3 md:grid-cols-4">
         {formData.fields(form)}
       </div>
