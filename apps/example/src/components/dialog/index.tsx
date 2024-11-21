@@ -24,7 +24,7 @@ export default function DrawerDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{button}</DialogTrigger>
-      <DialogContent className="w-full max-w-screen-lg">
+      <DialogContent className="w-full max-w-[80vw] max-h-[90vh] overflow-y-scroll">
         <DialogTitle className="sr-only">{title}</DialogTitle>
         <DialogDescription className="sr-only">{description}</DialogDescription>
         {children}
